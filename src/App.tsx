@@ -3,7 +3,11 @@ import io from "socket.io-client";
 import logo from "./logo.svg";
 import "./App.css";
 
-const socket = io("http://localhost:3001");
+const socket = io(
+	process.env.NODE_ENV !== "production"
+		? "http://localhost:3001"
+		: "https://corona-screening-backend.herokuapp.com/"
+);
 
 export type Status = "waiting" | "active" | "completed" | "rejected";
 
