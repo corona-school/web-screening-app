@@ -18,11 +18,7 @@ export interface Job {
 export interface JobInfo extends Job {
 	position: number;
 }
-const socket = io(
-	process.env.NODE_ENV !== "production"
-		? "https://corona-screening-backend-dev.herokuapp.com/"
-		: "https://corona-screening-backend.herokuapp.com/"
-);
+const socket = io("https://corona-screening-backend-dev.herokuapp.com/");
 
 const App = () => {
 	const [email, setEmail] = useState("");
