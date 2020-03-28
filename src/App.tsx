@@ -31,10 +31,10 @@ const App = () => {
 	const [jobInfo, setJobInfo] = useState<JobInfo | null>(null);
 
 	useEffect(() => {
-		if (jobInfo && jobInfo.status === "active" && !openLinked) {
-			window.open(jobInfo.jitsi);
-			setOpenLinked(true);
-		}
+		// if (jobInfo && jobInfo.status === "active" && !openLinked) {
+		// 	window.open(jobInfo.jitsi);
+		// 	setOpenLinked(true);
+		// }
 	}, [jobInfo, openLinked]);
 
 	useEffect(() => {

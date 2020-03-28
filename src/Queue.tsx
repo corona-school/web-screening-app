@@ -26,6 +26,21 @@ const Queue = ({
 		}
 	};
 
+	const getHeadlineText = () => {
+		if (status === "waiting") {
+			return "Warteschlange";
+		}
+		if (status === "active") {
+			return "Los Gehts!";
+		}
+		if (status === "completed") {
+			return "Viel Spaß!";
+		}
+		if (status === "rejected") {
+			return "Ooops";
+		}
+	};
+
 	return (
 		<div className="queue-container">
 			{status === "completed" ? (
@@ -36,9 +51,9 @@ const Queue = ({
 				</div>
 			)}
 
-			<h1 className="headline">Warteschlange</h1>
-
+			<h1 className="headline">{getHeadlineText()}</h1>
 			<div className="text">{getText()}</div>
+
 			<div className="queueItem">
 				<div className="description">Name:</div>
 				<div className="info"> {firstname}</div>
