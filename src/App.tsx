@@ -62,11 +62,11 @@ const App = () => {
 
 		return (
 			<div>
-				<div>{jobInfo.firstname}</div>
-				<div>{jobInfo.lastname}</div>
-				<div>{jobInfo.email}</div>
-				<div>{jobInfo.position}</div>
-				<div>{jobInfo.status}</div>
+				<div>Firstname: {jobInfo.firstname}</div>
+				<div>Lastname: {jobInfo.lastname}</div>
+				<div>Email: {jobInfo.email}</div>
+				<div>Position: {jobInfo.position}</div>
+				<div>Status: {jobInfo.status}</div>
 			</div>
 		);
 	};
