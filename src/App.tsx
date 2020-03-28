@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
-import logo from "./logo.svg";
-import "./App.css";
+import Header from "./Header";
+import "./App.scss";
+import Queue from "./Queue";
+import LoginForm from "./LoginForm";
 
 export type Status = "waiting" | "active" | "completed" | "rejected";
 
-interface Job {
+export interface Job {
 	firstname: string;
 	lastname: string;
 	email: string;
@@ -13,19 +15,27 @@ interface Job {
 	jitsi: string;
 	status: Status;
 }
-interface JobInfo extends Job {
+export interface JobInfo extends Job {
 	position: number;
 }
 const socket = io(
 	process.env.NODE_ENV !== "production"
-		? "http://localhost:3001"
+		? "https://corona-screening-backend-dev.herokuapp.com/"
 		: "https://corona-screening-backend.herokuapp.com/"
 );
 
 const App = () => {
 	const [email, setEmail] = useState("");
 	const [isLoggedIn, setLoggedIn] = useState(false);
+	const [openLinked, setOpenLinked] = useState(false);
 	const [jobInfo, setJobInfo] = useState<JobInfo | null>(null);
+
+	useEffect(() => {
+		if (jobInfo && jobInfo.status === "active" && !openLinked) {
+			window.open(jobInfo.jitsi);
+			setOpenLinked(true);
+		}
+	}, [jobInfo, openLinked]);
 
 	useEffect(() => {
 		socket.on("updateJob", (updatedJob: JobInfo) => {
@@ -47,42 +57,29 @@ const App = () => {
 		socket.emit("login", { email });
 	};
 
-	const renderLogin = () => {
-		return (
-			<>
-				<input
-					type="email"
-					value={email}
-					placeholder="Write your e-mail.."
-					onChange={e => setEmail(e.target.value)}
-				/>
-				<button onClick={handleLogin}>login</button>
-			</>
-		);
-	};
-
-	const renderJobInfo = () => {
-		if (!jobInfo) {
-			return;
-		}
-
-		return (
-			<div>
-				<div>Firstname: {jobInfo.firstname}</div>
-				<div>Lastname: {jobInfo.lastname}</div>
-				<div>Email: {jobInfo.email}</div>
-				<div>Position: {jobInfo.position}</div>
-				<div>Status: {jobInfo.status}</div>
-			</div>
-		);
+	const handleLogout = () => {
+		socket.emit("logout", { email });
+		setJobInfo(null);
+		setEmail("");
+		setOpenLinked(false);
 	};
 
 	return (
-		<div className="App">
-			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				{isLoggedIn ? renderJobInfo() : renderLogin()}
-			</header>
+		<div className="container">
+			<Header></Header>
+			<div className="main">
+				<div className="form-container">
+					{isLoggedIn && jobInfo ? (
+						<Queue jobInfo={jobInfo} handleLogout={handleLogout} />
+					) : (
+						<LoginForm
+							email={email}
+							setEmail={setEmail}
+							handleLogin={handleLogin}
+						/>
+					)}
+				</div>
+			</div>
 		</div>
 	);
 };

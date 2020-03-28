@@ -1,0 +1,21 @@
+.header {
+	height: 60px;
+	display: flex;
+	flex-direction: row;
+	width: 100vw;
+	padding: 8px;
+	align-items: center;
+}
+
+.logo {
+	height: 40px;
+	margin-left: 16px;
+	object-fit: cover;
+}
+
+.logo-title {
+	margin-left: 4px;
+	color: white;
+	font-size: 24px;
+	font-weight: 800;
+}
