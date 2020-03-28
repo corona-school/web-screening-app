@@ -28,6 +28,12 @@ const App = () => {
 	const [jobInfo, setJobInfo] = useState<JobInfo | null>(null);
 
 	useEffect(() => {
+		socket.on("updateJob", (updatedJob: JobInfo) => {
+			setJobInfo(updatedJob);
+		});
+	}, [jobInfo]);
+
+	useEffect(() => {
 		socket.on("login", (data: { success: boolean; jobInfo?: JobInfo }) => {
 			setLoggedIn(data.success);
 			if (data.jobInfo) {
