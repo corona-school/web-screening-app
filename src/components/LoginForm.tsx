@@ -32,7 +32,7 @@ const LoginForm = ({ email, setEmail, handleLogin }: Props) => {
 				onChange={e => setEmail(e.target.value)}
 			/>
 			<button onClick={handleLogin} className="button">
-				Jetzt verifizieren lassen
+				Starte Verifizierung
 			</button>
 		</>
 	);

@@ -3,6 +3,7 @@ import "./Queue.scss";
 import { JobInfo } from "../types/ScreeningTypes";
 import { TextMap, HeadlineMap } from "../language/JobLanguage";
 import { IconMap } from "./StatusIcon";
+import MetaTags from "react-meta-tags";
 
 const Queue = ({
 	jobInfo: { firstname, lastname, email, position, status, jitsi, time },
@@ -11,8 +12,17 @@ const Queue = ({
 	jobInfo: JobInfo;
 	handleLogout: () => void;
 }) => {
+	const TitleMap = new Map([
+		["waiting", `Corona School Stundent | Position ${position + 1}`],
+		["active", "Corona School Student | Verifizierung"],
+		["completed", "Corona School Student | Erfolg"],
+		["rejected", "Corona School Student | Abgelehnt"]
+	]);
 	return (
 		<div className="queue-container">
+			<MetaTags>
+				<title>{TitleMap.get(status)}</title>
+			</MetaTags>
 			{IconMap.get(status)}
 
 			<h1 className="headline">{HeadlineMap.get(status)}</h1>
