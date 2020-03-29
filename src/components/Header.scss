@@ -2,9 +2,10 @@
 	height: 60px;
 	display: flex;
 	flex-direction: row;
-	width: 100vw;
+	width: 100%;
 	padding: 8px;
 	align-items: center;
+	box-sizing: border-box;
 }
 
 .logo {

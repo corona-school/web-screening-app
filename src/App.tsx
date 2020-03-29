@@ -1,33 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import io from "socket.io-client";
-import Header from "./Header";
+import Header from "./components/Header";
 import "./App.scss";
-import Queue from "./Queue";
-import LoginForm from "./LoginForm";
+import Queue from "./components/Queue";
+import LoginForm from "./components/LoginForm";
 import Modal from "react-modal";
-import ModalContent from "./ModalContent";
-
-export type Status = "waiting" | "active" | "completed" | "rejected";
-
-export interface Screener {
-	firstname: string;
-	lastname: string;
-}
-
-export interface Job {
-	firstname: string;
-	lastname: string;
-	email: string;
-	time: number;
-	jitsi: string;
-	status: Status;
-}
-export interface JobInfo extends Job {
-	position: number;
-	screener?: Screener;
-}
-
-const socket = io("https://corona-screening-backend-dev.herokuapp.com/");
+import ModalContent from "./components/ModalContent";
+import { JobInfo } from "./types/ScreeningTypes";
 
 const customStyles = {
 	content: {
@@ -41,84 +20,98 @@ const customStyles = {
 	}
 };
 
-const App = () => {
-	let audio = new Audio("/media/redo.mp3");
-	const [email, setEmail] = useState("");
-	const [isLoggedIn, setLoggedIn] = useState(false);
-	const [openLinked, setOpenLinked] = useState(false);
-	const [isModalOpen, setModalOpen] = useState(false);
-	const [jobInfo, setJobInfo] = useState<JobInfo | null>(null);
+interface State {
+	email: string;
+	isLoggedIn: boolean;
+	isModalOpen: boolean;
+	jobInfo: JobInfo | null;
+}
 
-	useEffect(() => {
-		if (jobInfo && jobInfo.status === "active" && !openLinked) {
-			audio.play();
-			setModalOpen(true);
-			setOpenLinked(true);
-		}
-		if (
-			jobInfo &&
-			(jobInfo.status === "completed" || jobInfo.status === "rejected")
-		) {
-			setModalOpen(false);
-		}
-	}, [jobInfo, openLinked]);
-
-	useEffect(() => {
-		socket.on("updateJob", (updatedJob: JobInfo) => {
-			setJobInfo(updatedJob);
-		});
-	}, [jobInfo]);
-
-	useEffect(() => {
-		socket.on("login", (data: { success: boolean; jobInfo?: JobInfo }) => {
-			setLoggedIn(data.success);
-			if (data.jobInfo) {
-				setJobInfo(data.jobInfo);
-			}
-		});
-	}, [isLoggedIn]);
-
-	const handleLogin = () => {
-		console.log(email);
-		socket.emit("login", { email });
+class App extends React.Component {
+	state: State = {
+		email: "",
+		isLoggedIn: false,
+		isModalOpen: false,
+		jobInfo: null
 	};
 
-	const handleLogout = () => {
-		socket.emit("logout", { email });
-		setJobInfo(null);
-		setEmail("");
-		setOpenLinked(false);
+	socket = io("https://corona-screening-backend-dev.herokuapp.com/");
+	audio = new Audio("/media/redo.mp3");
+
+	getStateFromJob(job: JobInfo) {
+		if (job.status === "active") {
+			this.audio.play();
+		}
+		return {
+			jobInfo: job,
+			isModalOpen: job.status === "active" ? true : false
+		};
+	}
+
+	componentDidMount() {
+		this.socket.on("updateJob", (jobInfo: JobInfo) => {
+			this.setState({ ...this.getStateFromJob(jobInfo) });
+		});
+
+		this.socket.on("login", (data: { success: boolean; jobInfo: JobInfo }) => {
+			this.setState({
+				...this.getStateFromJob(data.jobInfo),
+				isLoggedIn: data.success
+			});
+		});
+	}
+
+	componentWillUnmount() {
+		this.socket.disconnect();
+	}
+
+	handleLogin = () => {
+		console.log(this.state.email);
+		this.socket.emit("login", { email: this.state.email });
 	};
 
-	return (
-		<div className="container">
-			<Header></Header>
-			<div className="main">
-				<div className="form-container">
-					{isLoggedIn && jobInfo ? (
-						<Queue jobInfo={jobInfo} handleLogout={handleLogout} />
-					) : (
-						<LoginForm
-							email={email}
-							setEmail={setEmail}
-							handleLogin={handleLogin}
-						/>
-					)}
+	handleLogout = () => {
+		this.socket.emit("logout", { email: this.state.email });
+		this.setState({
+			jobInfo: null,
+			email: "",
+			isModalOpen: false,
+			isLoggedIn: false
+		});
+	};
+	render() {
+		return (
+			<div className="container">
+				<Header></Header>
+				<div className="main">
+					<div className="form-container">
+						{this.state.isLoggedIn && this.state.jobInfo ? (
+							<Queue
+								jobInfo={this.state.jobInfo}
+								handleLogout={this.handleLogout}
+							/>
+						) : (
+							<LoginForm
+								email={this.state.email}
+								setEmail={(email: string) => this.setState({ email })}
+								handleLogin={this.handleLogin}
+							/>
+						)}
+					</div>
 				</div>
+				<Modal
+					isOpen={this.state.isModalOpen}
+					onRequestClose={() => this.setState({ isModalOpen: false })}
+					style={customStyles}
+					contentLabel="Example Modal">
+					<ModalContent
+						screenerName={this.state.jobInfo?.screener?.firstname || "Max"}
+						jitsiLink={this.state.jobInfo?.jitsi}
+					/>
+				</Modal>
 			</div>
-			<Modal
-				isOpen={isModalOpen}
-				onRequestClose={() => setModalOpen(false)}
-				style={customStyles}
-				contentLabel="Example Modal">
-				<ModalContent
-					screenerName={jobInfo?.screener?.firstname || "Max"}
-					jitsiLink={jobInfo?.jitsi}
-					closeModal={() => setModalOpen(false)}
-				/>
-			</Modal>
-		</div>
-	);
-};
+		);
+	}
+}
 
 export default App;

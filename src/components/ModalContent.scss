@@ -1,4 +1,4 @@
-@import "./App.scss";
+@import "../App.scss";
 
 .model-container {
 	display: flex;
@@ -35,7 +35,7 @@
 	border: solid 4px $primary-color;
 	border-radius: 2px;
 	font-size: 16px;
-	width: 120px;
+	width: 160px;
 	transition: all 0.25s ease;
 	outline: none;
 	text-transform: capitalize;

@@ -1,6 +1,6 @@
 import React from "react";
 import "./LoginForm.scss";
-import VerifyIcon from "./VerifyIcon";
+import VerifyIcon from "../icons/verifyIcon.svg";
 
 interface Props {
 	email: string;
@@ -11,7 +11,11 @@ interface Props {
 const LoginForm = ({ email, setEmail, handleLogin }: Props) => {
 	return (
 		<>
-			<VerifyIcon />
+			<img
+				style={{ marginBottom: "32px" }}
+				src={VerifyIcon}
+				alt="Verify Icon"
+			/>
 			<h1 className="headline">Wilkommen</h1>
 			<div className="text">
 				Hier kannst Du dich als Student*in verifizieren lassen.
@@ -19,7 +23,7 @@ const LoginForm = ({ email, setEmail, handleLogin }: Props) => {
 			<input
 				type="email"
 				value={email}
-				placeholder="Write your e-mail.."
+				placeholder="Trage hier deine E-Mail ein.."
 				onKeyUp={e => {
 					if (e.key === "Enter") {
 						handleLogin();
@@ -27,7 +31,9 @@ const LoginForm = ({ email, setEmail, handleLogin }: Props) => {
 				}}
 				onChange={e => setEmail(e.target.value)}
 			/>
-			<button onClick={handleLogin}>login</button>
+			<button onClick={handleLogin} className="button">
+				Jetzt verifizieren lassen
+			</button>
 		</>
 	);
 };

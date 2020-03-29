@@ -1,10 +1,4 @@
-import React from "react";
-
-export default class VerifyIcon extends React.Component {
-	render() {
-		return (
-			<svg
-				style={{ margin: "32px" }}
+<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="140"
 				height="140"
@@ -55,6 +49,3 @@ export default class VerifyIcon extends React.Component {
 					</g>
 				</g>
 			</svg>
-		);
-	}
-}
