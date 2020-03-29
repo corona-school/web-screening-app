@@ -25,7 +25,7 @@ const Queue = ({
 			</MetaTags>
 			{IconMap.get(status)}
 
-			<h1 className="headline">{HeadlineMap.get(status)}</h1>
+			<h1 className="queue-headline ">{HeadlineMap.get(status)}</h1>
 			<div className="text">{TextMap.get(status)}</div>
 
 			<div className="queueItem">
