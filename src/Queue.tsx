@@ -73,7 +73,9 @@ const Queue = ({
 			<div className="queueItem">
 				<div className="description">Link:</div>
 				<div className="info">
-					<a href={jitsi}>jjitsi Video Call</a>
+					<a href={jitsi} target="_blank" rel="noopener noreferrer">
+						Jitsi Videocall
+					</a>
 				</div>
 			</div>
 			<div className="queueItem">
