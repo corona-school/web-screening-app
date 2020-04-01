@@ -1,5 +1,6 @@
 import React from "react";
 import io from "socket.io-client";
+import BounceLoader from "react-spinners/BounceLoader";
 import Header from "./components/Header";
 import "./App.scss";
 import Queue from "./components/Queue";
@@ -23,6 +24,7 @@ const customStyles = {
 interface State {
 	email: string;
 	isLoggedIn: boolean;
+	pendingLogin: boolean;
 	isModalOpen: boolean;
 	jobInfo: JobInfo | null;
 }
@@ -31,11 +33,13 @@ class App extends React.Component {
 	state: State = {
 		email: "",
 		isLoggedIn: false,
+		pendingLogin: false,
 		isModalOpen: false,
 		jobInfo: null
 	};
 
 	socket = io("https://corona-screening-backend-dev.herokuapp.com/");
+
 	audio = new Audio("/media/redo.mp3");
 
 	getStateFromJob(job: JobInfo) {
@@ -49,14 +53,25 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
+		const email = localStorage.getItem("loginEmail");
+		if (email) {
+			this.setState({ pendingLogin: true });
+			this.socket.emit("login", { email });
+		}
+
 		this.socket.on("updateJob", (jobInfo: JobInfo) => {
+			console.log(jobInfo);
+
 			this.setState({ ...this.getStateFromJob(jobInfo) });
 		});
 
 		this.socket.on("login", (data: { success: boolean; jobInfo: JobInfo }) => {
+			localStorage.setItem("loginEmail", data.jobInfo.email);
+
 			this.setState({
 				...this.getStateFromJob(data.jobInfo),
-				isLoggedIn: data.success
+				isLoggedIn: data.success,
+				pendingLogin: false
 			});
 		});
 	}
@@ -66,11 +81,11 @@ class App extends React.Component {
 	}
 
 	handleLogin = () => {
-		console.log(this.state.email);
 		this.socket.emit("login", { email: this.state.email });
 	};
 
 	handleLogout = () => {
+		localStorage.removeItem("loginEmail");
 		this.socket.emit("logout", { email: this.state.email });
 		this.setState({
 			jobInfo: null,
@@ -80,9 +95,20 @@ class App extends React.Component {
 		});
 	};
 	render() {
+		if (this.state.pendingLogin) {
+			return (
+				<div className="container">
+					<Header isLoggedIn={false} handleLogout={this.handleLogout} />
+					<BounceLoader size={150} color={"#ed6b66"} loading={true} />
+				</div>
+			);
+		}
 		return (
 			<div className="container">
-				<Header></Header>
+				<Header
+					isLoggedIn={this.state.isLoggedIn}
+					handleLogout={this.handleLogout}
+				/>
 				<div className="main">
 					<div className="form-container">
 						{this.state.isLoggedIn && this.state.jobInfo ? (
@@ -103,7 +129,7 @@ class App extends React.Component {
 					isOpen={this.state.isModalOpen}
 					onRequestClose={() => this.setState({ isModalOpen: false })}
 					style={customStyles}
-					contentLabel="Example Modal">
+					contentLabel="Verifikation">
 					<ModalContent
 						screenerName={this.state.jobInfo?.screener?.firstname || "Max"}
 						jitsiLink={this.state.jobInfo?.jitsi}

@@ -52,9 +52,16 @@ input {
 	width: 240px;
 	transition: all 0.25s ease;
 	outline: none;
+	a {
+		color: white;
+		text-decoration: none;
+	}
 }
 
 button:hover {
 	background-color: white;
 	color: $primary-color;
+	a {
+		color: $primary-color;
+	}
 }

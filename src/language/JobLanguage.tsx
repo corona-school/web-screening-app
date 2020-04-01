@@ -1,8 +1,11 @@
 const TextMap = new Map([
-	["waiting", "Du wirst bald verifiziert..."],
+	[
+		"waiting",
+		"Du bist bald mit deinem Kennenlerngespräch dran, bleibe bitte auf dieser Seite. Wenn du willst kannst dich schon vorbereiten und dem Video-Call beitreten."
+	],
 	[
 		"active",
-		"Ein Mitarbeiter hat jetzt Zeit für Dich. Klick auf dem Link um die Verifizierung zu starten."
+		"Ein Mitarbeiter*in hat jetzt Zeit für Dich. Klick auf dem Link um die Verifizierung zu starten."
 	],
 	["completed", "Herzlichgen Glückwunsch! Du wurdest erfolgreich verifiziert!"],
 	["rejected", "Es tut uns leid. Du konntest nicht verifiziert werden."]
@@ -10,7 +13,7 @@ const TextMap = new Map([
 
 const HeadlineMap = new Map([
 	["waiting", "Einen Moment noch..."],
-	["active", "Los Gehts!"],
+	["active", "Los Geht's!"],
 	["completed", "Viel Spaß!"],
 	["rejected", "Ooops.."]
 ]);

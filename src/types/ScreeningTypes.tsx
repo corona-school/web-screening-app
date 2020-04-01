@@ -14,6 +14,6 @@ export interface Job {
 	status: Status;
 }
 export interface JobInfo extends Job {
-	position: number;
+	position?: number;
 	screener?: Screener;
 }
