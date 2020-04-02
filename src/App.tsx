@@ -28,6 +28,8 @@ interface State {
 	isModalOpen: boolean;
 	jobInfo: JobInfo | null;
 }
+const url: string =
+	process.env.REACT_APP_BACKEND_URL || "http://localhost:3001/";
 
 class App extends React.Component {
 	state: State = {
@@ -38,7 +40,7 @@ class App extends React.Component {
 		jobInfo: null
 	};
 
-	socket = io("https://corona-screening-backend-dev.herokuapp.com/");
+	socket = io(url);
 
 	audio = new Audio("/media/redo.mp3");
 
