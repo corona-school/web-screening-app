@@ -29,6 +29,7 @@ interface State {
 	jobInfo: JobInfo | null;
 	loginError: string | null;
 }
+
 const url: string =
 	process.env.REACT_APP_BACKEND_URL || "http://localhost:3001/";
 
@@ -125,10 +126,7 @@ class App extends React.Component {
 				<div className="main">
 					<div className="form-container">
 						{this.state.isLoggedIn && this.state.jobInfo ? (
-							<Queue
-								jobInfo={this.state.jobInfo}
-								handleLogout={this.handleLogout}
-							/>
+							<Queue jobInfo={this.state.jobInfo} />
 						) : (
 							<LoginForm
 								resetLoginError={() => this.setState({ loginError: null })}
