@@ -6,41 +6,41 @@ import { IconMap } from "./StatusIcon";
 import MetaTags from "react-meta-tags";
 
 const Queue = ({
-	jobInfo: { firstname, lastname, email, position, status, jitsi, time },
-	handleLogout
+  jobInfo: { firstname, position, status, jitsi },
 }: {
-	jobInfo: JobInfo;
-	handleLogout: () => void;
+  jobInfo: JobInfo;
 }) => {
-	const TitleMap = new Map([
-		["waiting", `Corona School Stundent | Warteschlange`],
-		["active", "Corona School Student | Verifizierung"],
-		["completed", "Corona School Student | Erfolg"],
-		["rejected", "Corona School Student | Abgelehnt"]
-	]);
-	return (
-		<div className="queue-container">
-			<MetaTags>
-				<title>{TitleMap.get(status)}</title>
-			</MetaTags>
-			{IconMap.get(status)}
+  const TitleMap = new Map([
+    ["waiting", `Corona School | Warteschlange`],
+    ["active", "Corona School | Kennenlerngespräch"],
+    ["completed", "Corona School | Fertig"],
+    ["rejected", "Corona School | Abgelehnt"],
+  ]);
+  return (
+    <div className="queue-container">
+      <MetaTags>
+        <title>{TitleMap.get(status)}</title>
+      </MetaTags>
+      {IconMap.get(status)}
 
-			<h1 className="queue-headline ">{HeadlineMap.get(status)}</h1>
-			<div className="text">
-				Hey {firstname}! {TextMap.get(status)}
-			</div>
+      <h1 className="queue-headline ">{HeadlineMap.get(status)}</h1>
+      <div className="text">
+        Hey {firstname}! {TextMap.get(status)}
+      </div>
 
-			{position && status === "waiting" && (
-				<div className="position">{position}</div>
-			)}
+      {position && status === "waiting" && (
+        <div className="position">{position}</div>
+      )}
 
-			<button style={{ marginTop: "32px" }} className="button">
-				<a href={jitsi} target="_blank" rel="noopener noreferrer">
-					Link zum Video-Call
-				</a>
-			</button>
-		</div>
-	);
+      {["waiting", "active"].includes(status) && (
+        <button style={{ marginTop: "32px" }} className="button">
+          <a href={jitsi} target="_blank" rel="noopener noreferrer">
+            Link zum Video-Call
+          </a>
+        </button>
+      )}
+    </div>
+  );
 };
 
 export default Queue;

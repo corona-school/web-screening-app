@@ -10,140 +10,138 @@ import ModalContent from "./components/ModalContent";
 import { JobInfo } from "./types/ScreeningTypes";
 
 const customStyles = {
-	content: {
-		top: "50%",
-		left: "50%",
-		right: "auto",
-		bottom: "auto",
-		border: "1px solid #ececec",
-		marginRight: "-50%",
-		transform: "translate(-50%, -50%)",
-	},
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    border: "1px solid #ececec",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
 };
 
 interface State {
-	email: string;
-	isLoggedIn: boolean;
-	pendingLogin: boolean;
-	isModalOpen: boolean;
-	jobInfo: JobInfo | null;
+  email: string;
+  isLoggedIn: boolean;
+  pendingLogin: boolean;
+  isModalOpen: boolean;
+  jobInfo: JobInfo | null;
 }
 const url: string =
-	process.env.REACT_APP_BACKEND_URL || "http://localhost:3001/";
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:3001/";
 
 class App extends React.Component {
-	state: State = {
-		email: "",
-		isLoggedIn: false,
-		pendingLogin: false,
-		isModalOpen: false,
-		jobInfo: null,
-	};
+  state: State = {
+    email: "",
+    isLoggedIn: false,
+    pendingLogin: false,
+    isModalOpen: false,
+    jobInfo: null,
+  };
 
-	socket = io(url);
+  socket = io(url);
 
-	audio = new Audio("/media/redo.mp3");
+  audio = new Audio("/media/redo.mp3");
 
-	getStateFromJob(job: JobInfo) {
-		if (job.status === "active") {
-			this.audio.play();
-		}
-		return {
-			jobInfo: job,
-			isModalOpen: job.status === "active" ? true : false,
-		};
-	}
+  getStateFromJob(job: JobInfo) {
+    if (job.status === "active") {
+      this.audio.play();
+    }
+    return {
+      jobInfo: job,
+      isModalOpen: job.status === "active" ? true : false,
+    };
+  }
 
-	componentDidMount() {
-		const email = localStorage.getItem("loginEmail");
-		if (email) {
-			this.setState({ pendingLogin: true });
-			this.socket.emit("login", { email });
-		}
+  componentDidMount() {
+    const email = localStorage.getItem("loginEmail");
+    if (email) {
+      this.setState({ pendingLogin: true });
+      this.socket.emit("login", { email });
+    }
 
-		this.socket.on("updateJob", (jobInfo: JobInfo) => {
-			console.log(jobInfo);
+    this.socket.on("updateJob", (jobInfo: JobInfo) => {
+      console.log(jobInfo);
 
-			this.setState({ ...this.getStateFromJob(jobInfo) });
-		});
+      this.setState({ ...this.getStateFromJob(jobInfo) });
+    });
 
-		this.socket.on("login", (data: { success: boolean; jobInfo: JobInfo }) => {
-			if (!data.success) {
-				this.setState({ isLoggedIn: false, pendingLogin: false });
-				return;
-			}
-			localStorage.setItem("loginEmail", data.jobInfo.email);
+    this.socket.on("login", (data: { success: boolean; jobInfo: JobInfo }) => {
+      if (!data.success) {
+        this.setState({ isLoggedIn: false, pendingLogin: false });
+        return;
+      }
+      localStorage.setItem("loginEmail", data.jobInfo.email);
 
-			this.setState({
-				...this.getStateFromJob(data.jobInfo),
-				isLoggedIn: data.success,
-				pendingLogin: false,
-			});
-		});
-	}
+      this.setState({
+        ...this.getStateFromJob(data.jobInfo),
+        isLoggedIn: data.success,
+        pendingLogin: false,
+      });
+    });
+  }
 
-	componentWillUnmount() {
-		this.socket.disconnect();
-	}
+  componentWillUnmount() {
+    this.socket.disconnect();
+  }
 
-	handleLogin = () => {
-		this.socket.emit("login", { email: this.state.email });
-	};
+  handleLogin = () => {
+    this.socket.emit("login", { email: this.state.email });
+  };
 
-	handleLogout = () => {
-		localStorage.removeItem("loginEmail");
-		this.socket.emit("logout", { email: this.state.email });
-		this.setState({
-			jobInfo: null,
-			email: "",
-			isModalOpen: false,
-			isLoggedIn: false,
-		});
-	};
-	render() {
-		if (this.state.pendingLogin) {
-			return (
-				<div className="container">
-					<Header isLoggedIn={false} handleLogout={this.handleLogout} />
-					<BounceLoader size={150} color={"#ed6b66"} loading={true} />
-				</div>
-			);
-		}
-		return (
-			<div className="container">
-				<Header
-					isLoggedIn={this.state.isLoggedIn}
-					handleLogout={this.handleLogout}
-				/>
-				<div className="main">
-					<div className="form-container">
-						{this.state.isLoggedIn && this.state.jobInfo ? (
-							<Queue
-								jobInfo={this.state.jobInfo}
-								handleLogout={this.handleLogout}
-							/>
-						) : (
-							<LoginForm
-								email={this.state.email}
-								setEmail={(email: string) => this.setState({ email })}
-								handleLogin={this.handleLogin}
-							/>
-						)}
-					</div>
-				</div>
-				<Modal
-					isOpen={this.state.isModalOpen}
-					onRequestClose={() => this.setState({ isModalOpen: false })}
-					style={customStyles}
-					contentLabel="Verifikation">
-					<ModalContent
-						screenerName={this.state.jobInfo?.screener?.firstname || "Max"}
-						jitsiLink={this.state.jobInfo?.jitsi}
-					/>
-				</Modal>
-			</div>
-		);
-	}
+  handleLogout = () => {
+    localStorage.removeItem("loginEmail");
+    this.socket.emit("logout", { email: this.state.email });
+    this.setState({
+      jobInfo: null,
+      email: "",
+      isModalOpen: false,
+      isLoggedIn: false,
+    });
+  };
+  render() {
+    if (this.state.pendingLogin) {
+      return (
+        <div className="container">
+          <Header isLoggedIn={false} handleLogout={this.handleLogout} />
+          <BounceLoader size={150} color={"#ed6b66"} loading={true} />
+        </div>
+      );
+    }
+    return (
+      <div className="container">
+        <Header
+          isLoggedIn={this.state.isLoggedIn}
+          handleLogout={this.handleLogout}
+        />
+        <div className="main">
+          <div className="form-container">
+            {this.state.isLoggedIn && this.state.jobInfo ? (
+              <Queue jobInfo={this.state.jobInfo} />
+            ) : (
+              <LoginForm
+                email={this.state.email}
+                setEmail={(email: string) => this.setState({ email })}
+                handleLogin={this.handleLogin}
+              />
+            )}
+          </div>
+        </div>
+        <Modal
+          isOpen={this.state.isModalOpen}
+          onRequestClose={() => this.setState({ isModalOpen: false })}
+          style={customStyles}
+          contentLabel="Verifikation"
+        >
+          <ModalContent
+            screenerName={this.state.jobInfo?.screener?.firstname || "Max"}
+            jitsiLink={this.state.jobInfo?.jitsi}
+          />
+        </Modal>
+      </div>
+    );
+  }
 }
 
 export default App;
