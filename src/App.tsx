@@ -17,8 +17,8 @@ const customStyles = {
 		bottom: "auto",
 		border: "1px solid #ececec",
 		marginRight: "-50%",
-		transform: "translate(-50%, -50%)"
-	}
+		transform: "translate(-50%, -50%)",
+	},
 };
 
 interface State {
@@ -37,7 +37,7 @@ class App extends React.Component {
 		isLoggedIn: false,
 		pendingLogin: false,
 		isModalOpen: false,
-		jobInfo: null
+		jobInfo: null,
 	};
 
 	socket = io(url);
@@ -50,7 +50,7 @@ class App extends React.Component {
 		}
 		return {
 			jobInfo: job,
-			isModalOpen: job.status === "active" ? true : false
+			isModalOpen: job.status === "active" ? true : false,
 		};
 	}
 
@@ -68,12 +68,16 @@ class App extends React.Component {
 		});
 
 		this.socket.on("login", (data: { success: boolean; jobInfo: JobInfo }) => {
+			if (!data.success) {
+				this.setState({ isLoggedIn: false, pendingLogin: false });
+				return;
+			}
 			localStorage.setItem("loginEmail", data.jobInfo.email);
 
 			this.setState({
 				...this.getStateFromJob(data.jobInfo),
 				isLoggedIn: data.success,
-				pendingLogin: false
+				pendingLogin: false,
 			});
 		});
 	}
@@ -93,7 +97,7 @@ class App extends React.Component {
 			jobInfo: null,
 			email: "",
 			isModalOpen: false,
-			isLoggedIn: false
+			isLoggedIn: false,
 		});
 	};
 	render() {
