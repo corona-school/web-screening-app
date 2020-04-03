@@ -4,8 +4,10 @@ import "./Header.scss";
 
 const Header = ({
 	isLoggedIn,
-	handleLogout
+	handleLogout,
+	isNotCompleted,
 }: {
+	isNotCompleted: boolean;
 	isLoggedIn: boolean;
 	handleLogout: () => void;
 }) => {
@@ -15,7 +17,7 @@ const Header = ({
 				<img src={logo} className="logo" alt="Corona School Logo"></img>
 				<div className="logo-title">Corona School</div>
 			</div>
-			{isLoggedIn && (
+			{isLoggedIn && isNotCompleted && (
 				<button
 					style={{ margin: "4px" }}
 					className="button"

@@ -66,7 +66,9 @@ class App extends React.Component {
 
 		this.socket.on("updateJob", (jobInfo: JobInfo) => {
 			console.log(jobInfo);
-
+			if (jobInfo.status === "completed" || jobInfo.status === "rejected") {
+				localStorage.removeItem("loginEmail");
+			}
 			this.setState({ ...this.getStateFromJob(jobInfo) });
 		});
 
@@ -79,7 +81,12 @@ class App extends React.Component {
 				});
 				return;
 			}
-			localStorage.setItem("loginEmail", data.jobInfo.email);
+			if (
+				data.jobInfo.status !== "completed" &&
+				data.jobInfo.status !== "rejected"
+			) {
+				localStorage.setItem("loginEmail", data.jobInfo.email);
+			}
 
 			this.setState({
 				loginError: null,
@@ -108,11 +115,17 @@ class App extends React.Component {
 			isLoggedIn: false,
 		});
 	};
+
 	render() {
+		const job = this.state.jobInfo;
 		if (this.state.pendingLogin) {
 			return (
 				<div className="container">
-					<Header isLoggedIn={false} handleLogout={this.handleLogout} />
+					<Header
+						isNotCompleted={false}
+						isLoggedIn={false}
+						handleLogout={this.handleLogout}
+					/>
 					<BounceLoader size={150} color={"#ed6b66"} loading={true} />
 				</div>
 			);
@@ -120,6 +133,9 @@ class App extends React.Component {
 		return (
 			<div className="container">
 				<Header
+					isNotCompleted={
+						job ? job.status === "waiting" || job.status === "active" : true
+					}
 					isLoggedIn={this.state.isLoggedIn}
 					handleLogout={this.handleLogout}
 				/>
