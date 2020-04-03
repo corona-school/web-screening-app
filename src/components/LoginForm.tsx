@@ -6,9 +6,17 @@ interface Props {
 	email: string;
 	setEmail: (value: string) => void;
 	handleLogin: () => void;
+	loginError: string | null;
+	resetLoginError: () => void;
 }
 
-const LoginForm = ({ email, setEmail, handleLogin }: Props) => {
+const LoginForm = ({
+	email,
+	setEmail,
+	handleLogin,
+	loginError,
+	resetLoginError,
+}: Props) => {
 	return (
 		<>
 			<img
@@ -23,15 +31,18 @@ const LoginForm = ({ email, setEmail, handleLogin }: Props) => {
 			<input
 				type="email"
 				value={email}
+				className={loginError ? "error" : ""}
 				placeholder="Trage hier deine E-Mail ein.."
-				onKeyUp={e => {
+				onKeyUp={(e) => {
+					resetLoginError();
 					if (e.key === "Enter") {
 						handleLogin();
 					}
 				}}
-				onChange={e => setEmail(e.target.value)}
+				onChange={(e) => setEmail(e.target.value)}
 			/>
-			<button onClick={handleLogin} className="button">
+			{loginError && <div className="loginError">{loginError}</div>}
+			<button onClick={handleLogin} className={"button"}>
 				Starte Verifizierung
 			</button>
 		</>

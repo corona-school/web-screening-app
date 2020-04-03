@@ -27,6 +27,7 @@ interface State {
 	pendingLogin: boolean;
 	isModalOpen: boolean;
 	jobInfo: JobInfo | null;
+	loginError: string | null;
 }
 const url: string =
 	process.env.REACT_APP_BACKEND_URL || "http://localhost:3001/";
@@ -38,6 +39,7 @@ class App extends React.Component {
 		pendingLogin: false,
 		isModalOpen: false,
 		jobInfo: null,
+		loginError: null,
 	};
 
 	socket = io(url);
@@ -69,12 +71,17 @@ class App extends React.Component {
 
 		this.socket.on("login", (data: { success: boolean; jobInfo: JobInfo }) => {
 			if (!data.success) {
-				this.setState({ isLoggedIn: false, pendingLogin: false });
+				this.setState({
+					isLoggedIn: false,
+					pendingLogin: false,
+					loginError: "Wir konnten keinen Studenten mit dieser E-Mail finden.",
+				});
 				return;
 			}
 			localStorage.setItem("loginEmail", data.jobInfo.email);
 
 			this.setState({
+				loginError: null,
 				...this.getStateFromJob(data.jobInfo),
 				isLoggedIn: data.success,
 				pendingLogin: false,
@@ -124,6 +131,8 @@ class App extends React.Component {
 							/>
 						) : (
 							<LoginForm
+								resetLoginError={() => this.setState({ loginError: null })}
+								loginError={this.state.loginError}
 								email={this.state.email}
 								setEmail={(email: string) => this.setState({ email })}
 								handleLogin={this.handleLogin}
