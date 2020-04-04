@@ -65,7 +65,6 @@ class App extends React.Component {
 		}
 
 		this.socket.on("updateJob", (jobInfo: JobInfo) => {
-			console.log(jobInfo);
 			if (jobInfo.status === "completed" || jobInfo.status === "rejected") {
 				localStorage.removeItem("loginEmail");
 			}
@@ -77,7 +76,7 @@ class App extends React.Component {
 				this.setState({
 					isLoggedIn: false,
 					pendingLogin: false,
-					loginError: "Wir konnten keinen Studenten mit dieser E-Mail finden.",
+					loginError: "Wir konnten keine*n Student*innen mit dieser E-Mail finden.",
 				});
 				return;
 			}
