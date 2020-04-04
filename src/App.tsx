@@ -73,7 +73,7 @@ class App extends React.Component {
 		});
 
 		this.socket.on("removedJob", (jobInfo: JobInfo) => {
-			console.log(jobInfo);
+			console.log("job got removed", jobInfo);
 			localStorage.removeItem("loginEmail");
 
 			this.setState({
