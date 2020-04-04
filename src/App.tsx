@@ -9,7 +9,6 @@ import Modal from "react-modal";
 import ModalContent from "./components/ModalContent";
 import { JobInfo } from "./types/ScreeningTypes";
 
-import { REACT_APP_BACKEND_URL } from "./env.js"
 
 const customStyles = {
 	content: {
@@ -32,7 +31,7 @@ interface State {
 	loginError: string | null;
 }
 
-const url: string = REACT_APP_BACKEND_URL || "http://localhost:3001/";
+const url: string = (window as any).env.REACT_APP_BACKEND_URL || "http://localhost:3001/";
 
 class App extends React.Component {
 	state: State = {
