@@ -76,8 +76,9 @@ class App extends React.Component {
 				this.setState({
 					isLoggedIn: false,
 					pendingLogin: false,
-					loginError: "Wir konnten keine*n Student*innen mit dieser E-Mail finden.",
+					loginError: "Wir konnten keine Student*innen mit dieser E-Mail finden.",
 				});
+				console.log(`env...: ${process.env.REACT_APP_BACKEND_URL}")
 				return;
 			}
 			if (
