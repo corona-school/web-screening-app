@@ -72,6 +72,18 @@ class App extends React.Component {
 			this.setState({ ...this.getStateFromJob(jobInfo) });
 		});
 
+		this.socket.on("removedJob", (jobInfo: JobInfo) => {
+			console.log(jobInfo);
+			localStorage.removeItem("loginEmail");
+
+			this.setState({
+				jobInfo: null,
+				email: "",
+				isModalOpen: false,
+				isLoggedIn: false,
+			});
+		});
+
 		this.socket.on("login", (data: { success: boolean; jobInfo: JobInfo }) => {
 			if (!data.success) {
 				this.setState({
