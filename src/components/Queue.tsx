@@ -6,41 +6,44 @@ import { IconMap } from "./StatusIcon";
 import MetaTags from "react-meta-tags";
 
 const Queue = ({
-  jobInfo: { firstname, position, status, jitsi },
+	jobInfo: { firstname, position, status, jitsi },
 }: {
-  jobInfo: JobInfo;
+	jobInfo: JobInfo;
 }) => {
-  const TitleMap = new Map([
-    ["waiting", `Corona School | Warteschlange`],
-    ["active", "Corona School | Kennenlerngespräch"],
-    ["completed", "Corona School | Fertig"],
-    ["rejected", "Corona School | Abgelehnt"],
-  ]);
-  return (
-    <div className="queue-container">
-      <MetaTags>
-        <title>{TitleMap.get(status)}</title>
-      </MetaTags>
-      {IconMap.get(status)}
+	const TitleMap = new Map([
+		["waiting", `Corona School | Warteschlange`],
+		["active", "Corona School | Kennenlerngespräch"],
+		["completed", "Corona School | Fertig"],
+		["rejected", "Corona School | Abgelehnt"],
+	]);
+	return (
+		<div className="queue-container">
+			<MetaTags>
+				<title>{TitleMap.get(status)}</title>
+			</MetaTags>
+			{IconMap.get(status)}
 
-      <h1 className="queue-headline ">{HeadlineMap.get(status)}</h1>
-      <div className="text">
-        Hey {firstname}! {TextMap.get(status)}
-      </div>
+			<h1 className="queue-headline ">{HeadlineMap.get(status)}</h1>
+			<div className="text">
+				Hey {firstname}! {TextMap.get(status)}
+			</div>
 
-      {position && status === "waiting" && (
-        <div className="position">{position}</div>
-      )}
+			{position && status === "waiting" && (
+				<div className="position">{position}</div>
+			)}
+			<p className="text" style={{ marginTop: "16px" }}>
+				Wir sind heute von <b>09:00 - 20:00 Uhr</b> für Dich da.
+			</p>
 
-      {["waiting", "active"].includes(status) && (
-        <button style={{ marginTop: "32px" }} className="button">
-          <a href={jitsi} target="_blank" rel="noopener noreferrer">
-            Link zum Video-Call
-          </a>
-        </button>
-      )}
-    </div>
-  );
+			{["waiting", "active"].includes(status) && (
+				<button style={{ marginTop: "0px" }} className="button">
+					<a href={jitsi} target="_blank" rel="noopener noreferrer">
+						Link zum Video-Call
+					</a>
+				</button>
+			)}
+		</div>
+	);
 };
 
 export default Queue;

@@ -9,7 +9,6 @@ import Modal from "react-modal";
 import ModalContent from "./components/ModalContent";
 import { JobInfo } from "./types/ScreeningTypes";
 
-
 const customStyles = {
 	content: {
 		top: "50%",
@@ -31,7 +30,9 @@ interface State {
 	loginError: string | null;
 }
 
-const url: string = (window as any).env.REACT_APP_BACKEND_URL || "http://localhost:3001/";
+const url: string = (window as any).env
+	? (window as any).env.REACT_APP_BACKEND_URL
+	: process.env.REACT_APP_BACKEND_URL || "http://localhost:3001/";
 
 class App extends React.Component {
 	state: State = {
@@ -93,7 +94,8 @@ class App extends React.Component {
 				this.setState({
 					isLoggedIn: false,
 					pendingLogin: false,
-					loginError: "Wir konnten keine Student*innen mit dieser E-Mail finden.",
+					loginError:
+						"Wir konnten keine Student*innen mit dieser E-Mail finden.",
 				});
 				return;
 			}
