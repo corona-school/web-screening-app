@@ -32,7 +32,7 @@ const Queue = ({
 				<div className="position">{position}</div>
 			)}
 			<p className="text" style={{ marginTop: "16px" }}>
-				Wir sind heute von <b>09:00 - 20:00 Uhr</b> für Dich da.
+				Wir sind heute von <b>13:00 - 18:00 Uhr</b> für Dich da.
 			</p>
 
 			{["waiting", "active"].includes(status) && (
