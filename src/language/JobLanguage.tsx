@@ -1,7 +1,7 @@
 const TextMap = new Map([
   [
     "waiting",
-    "Du bist bald mit deinem Kennenlerngespräch dran, bleibe bitte auf dieser Seite. Wenn du willst kannst dich schon vorbereiten und dem Video-Call beitreten.",
+    "Du bist bald mit deinem Kennenlerngespräch dran, bleibe bitte auf dieser Seite. Wenn du willst kannst du dich schon vorbereiten und dem Video-Call beitreten.",
   ],
   [
     "active",
