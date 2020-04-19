@@ -8,6 +8,20 @@ import LoginForm from "./components/LoginForm";
 import Modal from "react-modal";
 import ModalContent from "./components/ModalContent";
 import { JobInfo } from "./types/ScreeningTypes";
+import LogRocket from "logrocket";
+import * as Sentry from "@sentry/browser";
+LogRocket.init("knfv1d/corona-school");
+
+if (process.env.NODE_ENV !== "production") {
+	LogRocket.identify("leon-erath@hotmail.de", {
+		email: "leon-erath@hotmail.de",
+		subscriptionType: "dev",
+	});
+}
+
+Sentry.init({
+	dsn: process.env.REACT_APP_SENTRY_URL,
+});
 
 const customStyles = {
 	content: {
@@ -44,7 +58,12 @@ class App extends React.Component {
 		loginError: null,
 	};
 
-	socket = io(url);
+	socket = io(url, {
+		reconnection: true,
+		reconnectionDelay: 1000,
+		reconnectionDelayMax: 5000,
+		reconnectionAttempts: 99999,
+	});
 
 	audio = new Audio("/media/redo.mp3");
 
@@ -63,8 +82,37 @@ class App extends React.Component {
 		if (email) {
 			this.setState({ pendingLogin: true });
 			this.socket.emit("login", { email });
+			Sentry.configureScope((scope) => {
+				scope.setUser({ email });
+			});
+			LogRocket.identify(email, {
+				email,
+				subscriptionType: "student",
+			});
 		}
 
+		this.socket.on("connect", function () {
+			console.log("connected to server");
+		});
+
+		this.socket.on("disconnect", function () {
+			console.log("disconnected to server");
+		});
+
+		this.socket.on("connect_error", (error: Error) => {
+			Sentry.captureException(error);
+			console.log("connect_error", error.message);
+		});
+		this.socket.on("error", (error: Error) => {
+			Sentry.captureException(error);
+			console.log("error", error.message);
+		});
+		this.socket.on("reconnecting", (attemptNumber: number) => {
+			console.log("reconnecting", attemptNumber);
+		});
+		this.socket.on("connect_timeout", (data: any) => {
+			console.log("connect_timeout", data.message);
+		});
 		this.socket.on("updateJob", (jobInfo: JobInfo) => {
 			if (jobInfo.status === "completed" || jobInfo.status === "rejected") {
 				localStorage.removeItem("loginEmail");
