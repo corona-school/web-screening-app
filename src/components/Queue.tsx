@@ -27,12 +27,13 @@ const Queue = ({
 		["rejected", "Corona School | Abgelehnt"],
 	]);
 
-	const screeningTime = 15;
+	const screeningTime = 10;
 	const pos = position ? position - 1 : 0;
-	const time =
+	const time = Math.round(
 		onlineScreener !== 0
 			? (pos / onlineScreener) * screeningTime
-			: pos * screeningTime;
+			: pos * screeningTime
+	);
 
 	console.log(isLoggedIn, isNotCompleted);
 
