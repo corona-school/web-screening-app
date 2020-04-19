@@ -5,17 +5,37 @@ import { TextMap, HeadlineMap } from "../language/JobLanguage";
 import { IconMap } from "./StatusIcon";
 import MetaTags from "react-meta-tags";
 
+interface Props {
+	jobInfo: JobInfo;
+	onlineScreener: number;
+	isLoggedIn: boolean;
+	isNotCompleted: boolean;
+	handleLogout: () => void;
+}
+
 const Queue = ({
 	jobInfo: { firstname, position, status, jitsi },
-}: {
-	jobInfo: JobInfo;
-}) => {
+	onlineScreener,
+	isLoggedIn,
+	isNotCompleted,
+	handleLogout,
+}: Props) => {
 	const TitleMap = new Map([
 		["waiting", `Corona School | Warteschlange`],
 		["active", "Corona School | Kennenlerngespräch"],
 		["completed", "Corona School | Fertig"],
 		["rejected", "Corona School | Abgelehnt"],
 	]);
+
+	const screeningTime = 15;
+	const pos = position ? position - 1 : 0;
+	const time =
+		onlineScreener !== 0
+			? (pos / onlineScreener) * screeningTime
+			: pos * screeningTime;
+
+	console.log(isLoggedIn, isNotCompleted);
+
 	return (
 		<div className="queue-container">
 			<MetaTags>
@@ -29,19 +49,33 @@ const Queue = ({
 			</div>
 
 			{position && status === "waiting" && (
-				<div className="position">{position}</div>
+				<div className="position">
+					<div className="positionText">{position}</div>
+
+					<div className="timeText">
+						ca. {time} - {time + screeningTime}
+						min
+					</div>
+				</div>
 			)}
 			<p className="text" style={{ marginTop: "16px" }}>
 				Wir sind heute von <b>09:00 - 21:00 Uhr</b> für Dich da.
 			</p>
 
-			{["waiting", "active"].includes(status) && (
-				<button style={{ marginTop: "0px" }} className="button">
-					<a href={jitsi} target="_blank" rel="noopener noreferrer">
-						Link zum Video-Call
-					</a>
-				</button>
-			)}
+			<div className="actionButtons">
+				{isLoggedIn && isNotCompleted && (
+					<button className="abortButton" onClick={handleLogout}>
+						Abbrechen
+					</button>
+				)}
+				{["waiting", "active"].includes(status) && (
+					<button className="button">
+						<a href={jitsi} target="_blank" rel="noopener noreferrer">
+							Link zum Video-Call
+						</a>
+					</button>
+				)}
+			</div>
 		</div>
 	);
 };

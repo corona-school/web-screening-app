@@ -39,15 +39,56 @@
 .position {
 	border: 3px solid #ed6b66;
 	padding: 16px;
-	width: 30px;
-	height: 30px;
+	width: 120px;
+	height: 24px;
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	border-radius: 50%;
-	color: #ed6b66;
+	justify-content: space-between;
+	border-radius: 40px;
 	font-size: 20px;
+	color: #ed6b66;
 	text-align: center;
+}
+
+.positionText {
+	color: #ed6b66;
+	width: 20px;
+	padding-right: 4px;
+	border-right: 2px solid #ed6b66;
+	margin-right: 4px;
+}
+
+.timeText {
+	flex-grow: 1;
+	font-size: 14px;
+	color: #ed6b66;
+}
+
+.actionButtons {
+	display: flex;
+	justify-content: space-between;
+}
+
+.abortButton {
+	cursor: pointer;
+	margin: 16px;
+	padding: 8px 20px;
+	color: $primary-color;
+	border: solid 4px $primary-color;
+	border-radius: 2px;
+	font-size: 16px;
+	width: 120px;
+	transition: all 0.25s ease;
+	outline: none;
+	a {
+		color: white;
+		text-decoration: none;
+	}
+}
+
+.abortButton:hover {
+	background-color: $primary-color;
+	color: white;
 }
 
 .info {

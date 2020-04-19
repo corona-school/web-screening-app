@@ -12,6 +12,18 @@ import LogRocket from "logrocket";
 import * as Sentry from "@sentry/browser";
 LogRocket.init("knfv1d/corona-school");
 
+enum StudentSocketEvents {
+	LOGIN = "login",
+	UPDATE_JOB = "updateJob",
+	REMOVED_JOB = "removedJob",
+	UPDATE_SCREENER = "updateScreener",
+}
+
+enum StudentSocketActions {
+	LOGIN = "login",
+	LOGOUT = "logout",
+}
+
 if (process.env.NODE_ENV !== "production") {
 	LogRocket.identify("leon-erath@hotmail.de", {
 		email: "leon-erath@hotmail.de",
@@ -42,6 +54,7 @@ interface State {
 	isModalOpen: boolean;
 	jobInfo: JobInfo | null;
 	loginError: string | null;
+	onlineScreener: number;
 }
 
 const url: string = (window as any).env
@@ -56,6 +69,7 @@ class App extends React.Component {
 		isModalOpen: false,
 		jobInfo: null,
 		loginError: null,
+		onlineScreener: 0,
 	};
 
 	socket = io(url, {
@@ -113,14 +127,22 @@ class App extends React.Component {
 		this.socket.on("connect_timeout", (data: any) => {
 			console.log("connect_timeout", data.message);
 		});
-		this.socket.on("updateJob", (jobInfo: JobInfo) => {
+		this.socket.on(StudentSocketEvents.UPDATE_JOB, (jobInfo: JobInfo) => {
 			if (jobInfo.status === "completed" || jobInfo.status === "rejected") {
 				localStorage.removeItem("loginEmail");
 			}
 			this.setState({ ...this.getStateFromJob(jobInfo) });
 		});
 
-		this.socket.on("removedJob", () => {
+		this.socket.on(
+			StudentSocketEvents.UPDATE_SCREENER,
+			(data: { screenerCount: number }) => {
+				this.setState({ onlineScreener: data.screenerCount });
+				console.log("Live screener count:", data.screenerCount);
+			}
+		);
+
+		this.socket.on(StudentSocketEvents.REMOVED_JOB, () => {
 			console.log("job got removed");
 			if (
 				this.state.jobInfo &&
@@ -137,30 +159,33 @@ class App extends React.Component {
 			}
 		});
 
-		this.socket.on("login", (data: { success: boolean; jobInfo: JobInfo }) => {
-			if (!data.success) {
-				this.setState({
-					isLoggedIn: false,
-					pendingLogin: false,
-					loginError:
-						"Wir konnten keine Student*innen mit dieser E-Mail finden.",
-				});
-				return;
-			}
-			if (
-				data.jobInfo.status !== "completed" &&
-				data.jobInfo.status !== "rejected"
-			) {
-				localStorage.setItem("loginEmail", data.jobInfo.email);
-			}
+		this.socket.on(
+			StudentSocketEvents.LOGIN,
+			(data: { success: boolean; jobInfo: JobInfo }) => {
+				if (!data.success) {
+					this.setState({
+						isLoggedIn: false,
+						pendingLogin: false,
+						loginError:
+							"Wir konnten keine Student*innen mit dieser E-Mail finden.",
+					});
+					return;
+				}
+				if (
+					data.jobInfo.status !== "completed" &&
+					data.jobInfo.status !== "rejected"
+				) {
+					localStorage.setItem("loginEmail", data.jobInfo.email);
+				}
 
-			this.setState({
-				loginError: null,
-				...this.getStateFromJob(data.jobInfo),
-				isLoggedIn: data.success,
-				pendingLogin: false,
-			});
-		});
+				this.setState({
+					loginError: null,
+					...this.getStateFromJob(data.jobInfo),
+					isLoggedIn: data.success,
+					pendingLogin: false,
+				});
+			}
+		);
 	}
 
 	componentWillUnmount() {
@@ -187,28 +212,28 @@ class App extends React.Component {
 		if (this.state.pendingLogin) {
 			return (
 				<div className="container">
-					<Header
-						isNotCompleted={false}
-						isLoggedIn={false}
-						handleLogout={this.handleLogout}
-					/>
+					<Header />
 					<BounceLoader size={150} color={"#ed6b66"} loading={true} />
 				</div>
 			);
 		}
 		return (
 			<div className="container">
-				<Header
-					isNotCompleted={
-						job ? job.status === "waiting" || job.status === "active" : true
-					}
-					isLoggedIn={this.state.isLoggedIn}
-					handleLogout={this.handleLogout}
-				/>
+				<Header />
 				<div className="main">
 					<div className="form-container">
 						{this.state.isLoggedIn && this.state.jobInfo ? (
-							<Queue jobInfo={this.state.jobInfo} />
+							<Queue
+								isNotCompleted={
+									job
+										? job.status === "waiting" || job.status === "active"
+										: true
+								}
+								isLoggedIn={this.state.isLoggedIn}
+								handleLogout={this.handleLogout}
+								jobInfo={this.state.jobInfo}
+								onlineScreener={this.state.onlineScreener}
+							/>
 						) : (
 							<LoginForm
 								resetLoginError={() => this.setState({ loginError: null })}
