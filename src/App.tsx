@@ -83,8 +83,13 @@ class App extends React.Component {
 		if (job.status === "active") {
 			try {
 				const audio = new Audio("/media/redo.mp3");
-				if (audio) {
-					audio.play();
+				if (!audio) {
+					return;
+				}
+
+				const promise = audio.play();
+				if (promise !== undefined) {
+					promise.then(() => {}).catch((error) => console.error(error));
 				}
 			} catch (err) {
 				console.error(err);
