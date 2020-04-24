@@ -79,11 +79,16 @@ class App extends React.Component {
 		reconnectionAttempts: 99999,
 	});
 
-	audio = new Audio("/media/redo.mp3");
-
 	getStateFromJob(job: JobInfo) {
 		if (job.status === "active") {
-			this.audio.play();
+			try {
+				const audio = new Audio("/media/redo.mp3");
+				if (audio) {
+					audio.play();
+				}
+			} catch (err) {
+				console.error(err);
+			}
 		}
 		return {
 			jobInfo: job,
@@ -123,6 +128,10 @@ class App extends React.Component {
 		});
 		this.socket.on("reconnecting", (attemptNumber: number) => {
 			console.log("reconnecting", attemptNumber);
+		});
+		this.socket.on("reconnect", () => {
+			console.log("reconnected");
+			this.socket.emit("student-reconnect", { email: this.state.email });
 		});
 		this.socket.on("connect_timeout", (data: any) => {
 			console.log("connect_timeout", data.message);
