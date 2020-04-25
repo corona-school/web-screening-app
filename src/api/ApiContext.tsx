@@ -141,31 +141,28 @@ class ApiContextComponent extends React.Component<
 			if (hide) {
 				hide();
 				hide = null;
-				if (email) {
-					message.success("Verbindung wieder hergestellt.");
-					return;
-				}
+			}
+			if (!email) {
 				notification.error({
 					message: "Verbindungsprobleme",
 					description:
 						"Ein Fehler ist aufgetreten und es kann keine Verbindung mit dem Server aufgebaut werden. Bitte lade die Seite neu und versuche es noch einmal.  Sonst schreib uns einfach eine E-mail.",
 					duration: 0,
 				});
-			}
-			if (email) {
-				console.log("reconnected.");
-				socket.emit("student-reconnect", { email });
+				console.warn("Cannot find email");
+				localStorage.removeItem("loginEmail");
+				this.setState({
+					jobInfo: null,
+					email: "",
+					isModalOpen: false,
+					isLoggedIn: false,
+				});
 				return;
 			}
 
-			console.warn("Cannot find email");
-			localStorage.removeItem("loginEmail");
-			this.setState({
-				jobInfo: null,
-				email: "",
-				isModalOpen: false,
-				isLoggedIn: false,
-			});
+			message.success("Verbindung wieder hergestellt.");
+			console.log("reconnected.");
+			socket.emit("student-reconnect", { email });
 		});
 		socket.on("connect_timeout", (data: any) => {
 			console.log("connect_timeout", data.message);
