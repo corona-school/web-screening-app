@@ -28,7 +28,7 @@ const LoginForm = ({
 			<div className="text">
 				<p>
 					Hier kannst Du Dich als Student*in verifizieren lassen. Wir sind heute
-					von <b>09:00 - 18:00 Uhr</b> für Dich da.
+					von <b>09:00 - 12:00 sowie von 15:00 - 18:00 Uhr</b> für Dich da.
 				</p>
 			</div>
 			<input
