@@ -10,6 +10,8 @@ import ModalContent from "./components/ModalContent";
 import { JobInfo } from "./types/ScreeningTypes";
 import LogRocket from "logrocket";
 import * as Sentry from "@sentry/browser";
+import { message, notification } from "antd";
+import { MessageType } from "antd/lib/message";
 LogRocket.init("knfv1d/corona-school");
 
 enum StudentSocketEvents {
@@ -102,6 +104,7 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
+		window.addEventListener("beforeunload", this.beforeunload.bind(this));
 		const email = localStorage.getItem("loginEmail");
 		if (email) {
 			this.setState({ pendingLogin: true });
@@ -122,6 +125,7 @@ class App extends React.Component {
 		this.socket.on("disconnect", function () {
 			console.log("disconnected to server");
 		});
+		let hide: null | MessageType = null;
 
 		this.socket.on("connect_error", (error: Error) => {
 			Sentry.captureException(error);
@@ -133,25 +137,48 @@ class App extends React.Component {
 		});
 		this.socket.on("reconnecting", (attemptNumber: number) => {
 			console.log("reconnecting", attemptNumber);
+			if (!hide) {
+				hide = message.loading("Verbindung wiederaufbauen..", 0);
+			}
+			if (attemptNumber % 5 === 0) {
+				notification.error({
+					message: "Verbindungsprobleme",
+					description:
+						"Ein Fehler ist aufgetreten und es kann keine Verbindung mit dem Server aufgebaut werden. Bitte lade die Seite neu und versuche es noch einmal. Sonst wende dich an unseren Suppoert: support@corona-school.de",
+					duration: 0,
+				});
+			}
 		});
 		this.socket.on("reconnect", () => {
+			if (hide) {
+				hide();
+				hide = null;
+				if (this.state.email.length > 0 || localStorage.getItem("loginEmail")) {
+					message.success("Verbindung wieder hergestellt.");
+				} else {
+					message.error("Verbindung konnte nicht wieder hergestellt werden.");
+				}
+			}
 			console.log("reconnected");
 			if (this.state.email.length > 0) {
 				this.socket.emit("student-reconnect", { email: this.state.email });
-			} else if (localStorage.getItem("loginEmail")) {
+				return;
+			}
+			if (localStorage.getItem("loginEmail")) {
 				this.socket.emit("student-reconnect", {
 					email: localStorage.getItem("loginEmail"),
 				});
-			} else {
-				console.warn("Cannot find email");
-				localStorage.removeItem("loginEmail");
-				this.setState({
-					jobInfo: null,
-					email: "",
-					isModalOpen: false,
-					isLoggedIn: false,
-				});
+				return;
 			}
+
+			console.warn("Cannot find email");
+			localStorage.removeItem("loginEmail");
+			this.setState({
+				jobInfo: null,
+				email: "",
+				isModalOpen: false,
+				isLoggedIn: false,
+			});
 		});
 		this.socket.on("connect_timeout", (data: any) => {
 			console.log("connect_timeout", data.message);
@@ -222,8 +249,14 @@ class App extends React.Component {
 	}
 
 	handleLogin = () => {
+		window.removeEventListener("beforeunload", this.beforeunload.bind(this));
 		this.socket.emit("login", { email: this.state.email });
 	};
+
+	beforeunload(e: any) {
+		e.preventDefault();
+		e.returnValue = true;
+	}
 
 	handleLogout = () => {
 		localStorage.removeItem("loginEmail");

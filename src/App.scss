@@ -20,13 +20,15 @@ $primary-color: #ed6b66;
 }
 
 .form-container {
+	box-sizing: border-box;
 	background: white;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 400px;
-	height: 640px;
+	flex-grow: 1;
+	max-width: 500px;
+	max-height: 700px;
 	padding: 16px;
 }
 
@@ -43,13 +45,14 @@ input {
 .button {
 	cursor: pointer;
 	margin: 16px;
-	padding: 8px 20px;
+	padding: 4px 20px;
 	color: white;
+	max-lines: 1;
 	background-color: $primary-color;
 	border: solid 4px $primary-color;
 	border-radius: 2px;
 	font-size: 16px;
-	min-height: 42px;
+	min-height: 38px;
 	width: 220px;
 	transition: all 0.25s ease;
 	outline: none;
