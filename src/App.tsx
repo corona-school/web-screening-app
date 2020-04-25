@@ -193,6 +193,7 @@ class App extends React.Component {
 				}
 
 				this.setState({
+					email: data.jobInfo.email,
 					loginError: null,
 					...this.getStateFromJob(data.jobInfo),
 					isLoggedIn: data.success,
