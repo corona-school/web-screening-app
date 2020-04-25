@@ -142,7 +142,7 @@ class ApiContextComponent extends React.Component<
 				hide();
 				hide = null;
 			}
-			if (!email) {
+			if (!email || email.length === 0) {
 				notification.error({
 					message: "Verbindungsprobleme",
 					description:
