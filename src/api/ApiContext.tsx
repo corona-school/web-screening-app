@@ -138,9 +138,6 @@ class ApiContextComponent extends React.Component<
 			}
 		});
 		socket.on("reconnect", () => {
-			const { email } = this.props.match.params;
-			console.log(email);
-
 			if (hide) {
 				hide();
 				hide = null;
@@ -155,8 +152,8 @@ class ApiContextComponent extends React.Component<
 					duration: 0,
 				});
 			}
-			console.log("reconnected");
 			if (email) {
+				console.log("reconnected.");
 				socket.emit("student-reconnect", { email });
 				return;
 			}
