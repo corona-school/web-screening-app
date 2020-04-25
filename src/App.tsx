@@ -136,7 +136,22 @@ class App extends React.Component {
 		});
 		this.socket.on("reconnect", () => {
 			console.log("reconnected");
-			this.socket.emit("student-reconnect", { email: this.state.email });
+			if (this.state.email.length > 0) {
+				this.socket.emit("student-reconnect", { email: this.state.email });
+			} else if (localStorage.getItem("loginEmail")) {
+				this.socket.emit("student-reconnect", {
+					email: localStorage.getItem("loginEmail"),
+				});
+			} else {
+				console.warn("Cannot find email");
+				localStorage.removeItem("loginEmail");
+				this.setState({
+					jobInfo: null,
+					email: "",
+					isModalOpen: false,
+					isLoggedIn: false,
+				});
+			}
 		});
 		this.socket.on("connect_timeout", (data: any) => {
 			console.log("connect_timeout", data.message);
@@ -193,7 +208,6 @@ class App extends React.Component {
 				}
 
 				this.setState({
-					email: data.jobInfo.email,
 					loginError: null,
 					...this.getStateFromJob(data.jobInfo),
 					isLoggedIn: data.success,
