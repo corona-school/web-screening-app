@@ -138,12 +138,12 @@ class ApiContextComponent extends React.Component<
 			}
 		});
 		socket.on("reconnect", () => {
-			const email = this.getEmail();
+			const email2 = this.getEmail();
 			if (hide) {
 				hide();
 				hide = null;
 			}
-			if (!email || email.length === 0) {
+			if (!email2 || email2.length === 0) {
 				notification.error({
 					message: "Verbindungsprobleme",
 					description:
@@ -163,7 +163,7 @@ class ApiContextComponent extends React.Component<
 
 			message.success("Verbindung wieder hergestellt.");
 			console.log("reconnected.");
-			socket.emit("student-reconnect", { email });
+			socket.emit("student-reconnect", { email: email2 });
 		});
 		socket.on("connect_timeout", (data: any) => {
 			console.log("connect_timeout", data.message);
