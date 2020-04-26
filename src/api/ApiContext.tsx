@@ -167,6 +167,22 @@ class ApiContextComponent extends React.Component<
 		socket.on("connect_timeout", (data: any) => {
 			console.log("connect_timeout", data.message);
 		});
+		socket.on("failedReconnect", () => {
+			notification.error({
+				message: "Verbindungsprobleme",
+				description:
+					"Ein Fehler ist aufgetreten und es kann keine Verbindung mit dem Server aufgebaut werden. Bitte lade die Seite neu und versuche es noch einmal.  Sonst schreib uns einfach eine E-mail.",
+				duration: 0,
+			});
+			console.warn("Could not reconnect properly. Forcing Logout.");
+			localStorage.removeItem("loginEmail");
+			this.setState({
+				jobInfo: null,
+				email: "",
+				isModalOpen: false,
+				isLoggedIn: false,
+			});
+		});
 		socket.on(StudentSocketEvents.UPDATE_JOB, (jobInfo: JobInfo) => {
 			if (jobInfo.status === "completed" || jobInfo.status === "rejected") {
 				localStorage.removeItem("loginEmail");
