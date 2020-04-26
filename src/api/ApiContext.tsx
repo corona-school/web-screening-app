@@ -1,11 +1,12 @@
 import React from "react";
-import { withRouter, RouteComponentProps, useParams } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import io from "socket.io-client";
 import { JobInfo } from "../types/ScreeningTypes";
 import LogRocket from "logrocket";
 import * as Sentry from "@sentry/browser";
 import { message, notification } from "antd";
 import { MessageType } from "antd/lib/message";
+import Push from "push.js";
 
 const ApiContext = React.createContext<IProviderProps | null>(null);
 
@@ -62,6 +63,7 @@ interface State {
 	jobInfo: JobInfo | null;
 	loginError: string | null;
 	onlineScreener: number;
+	grantedNotification: boolean;
 }
 
 interface RouteProps {
@@ -77,6 +79,7 @@ class ApiContextComponent extends React.Component<
 		jobInfo: null,
 		loginError: null,
 		onlineScreener: 0,
+		grantedNotification: false,
 	};
 
 	getStateFromJob(job: JobInfo) {
@@ -93,6 +96,12 @@ class ApiContextComponent extends React.Component<
 	};
 
 	componentDidMount() {
+		Push.Permission.request(
+			() => {
+				this.setState({ grantedNotification: true });
+			},
+			() => {}
+		);
 		const email = this.getEmail();
 		if (email) {
 			this.setState({ pendingLogin: true });
@@ -187,6 +196,15 @@ class ApiContextComponent extends React.Component<
 			});
 		});
 		socket.on(StudentSocketEvents.UPDATE_JOB, (jobInfo: JobInfo) => {
+			if (jobInfo.status === "active" && this.state.grantedNotification) {
+				Push.create("Du bist dran!", {
+					body: `Dein Eignungsgespräch kann beginnen.`,
+					timeout: 10000,
+					onClick: () => {
+						window.focus();
+					},
+				});
+			}
 			if (jobInfo.status === "completed" || jobInfo.status === "rejected") {
 				localStorage.removeItem("loginEmail");
 			}

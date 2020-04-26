@@ -23,6 +23,7 @@
     "express-favicon": "^2.0.1",
     "node-sass": "^4.13.1",
     "path": "^0.12.7",
+    "push.js": "^1.0.12",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-lottie": "^1.2.3",
