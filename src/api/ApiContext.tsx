@@ -138,6 +138,7 @@ class ApiContextComponent extends React.Component<
 			}
 		});
 		socket.on("reconnect", () => {
+			const email = this.getEmail();
 			if (hide) {
 				hide();
 				hide = null;
