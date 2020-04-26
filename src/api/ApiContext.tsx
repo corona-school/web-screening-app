@@ -177,6 +177,7 @@ class ApiContextComponent extends React.Component<
 			});
 			console.warn("Could not reconnect properly. Forcing Logout.");
 			localStorage.removeItem("loginEmail");
+			this.props.history.replace("/");
 			this.setState({
 				jobInfo: null,
 				email: "",
@@ -213,6 +214,7 @@ class ApiContextComponent extends React.Component<
 					isModalOpen: false,
 					isLoggedIn: false,
 				});
+				this.props.history.replace("/");
 			}
 		});
 
