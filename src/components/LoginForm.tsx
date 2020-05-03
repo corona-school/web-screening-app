@@ -22,11 +22,10 @@ const LoginForm = () => {
 					<div className="text">
 						<p>
 							Hier kannst Du Dich als Student*in verifizieren lassen. Wir sind
-							heute von <b>09:00 - 12:00 sowie von 15:00 - 18:00 Uhr</b> für
-							Dich da.
+							heute leider nicht für Dich da.
 						</p>
 					</div>
-					<input
+					{/* <input
 						type="email"
 						value={email}
 						className={context?.loginError ? "error" : ""}
@@ -46,7 +45,7 @@ const LoginForm = () => {
 						onClick={() => context?.handleLogin(email)}
 						className={"button"}>
 						Starte Verifizierung
-					</button>
+					</button> */}
 				</div>
 			</div>
 		</div>
