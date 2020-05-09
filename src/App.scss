@@ -17,6 +17,7 @@ $primary-color: #ed6b66;
 	justify-content: center;
 	align-items: center;
 	flex-grow: 1;
+	width: 100%;
 }
 
 .form-container {
@@ -26,9 +27,11 @@ $primary-color: #ed6b66;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	flex-grow: 1;
+	width: 100%;
 	max-width: 500px;
-	max-height: 700px;
+	min-width: 300px;
+	max-height: 900px;
+	min-height: 600px;
 	padding: 16px;
 }
 

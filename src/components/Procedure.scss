@@ -1,0 +1,29 @@
+.procedure-container {
+	margin-bottom: 16px;
+}
+.procedure-text {
+	font-size: 14px;
+	text-align: center;
+	margin: 8px 0px;
+}
+.procedure-item {
+	margin-bottom: 8px;
+	display: flex;
+	align-items: center;
+
+	.procedure-number {
+		border-radius: 50%;
+		width: 30px;
+		height: 30px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: 1px solid #ed6b66;
+	}
+	.procedure-text {
+		text-align: left;
+		margin-left: 16px;
+		font-size: 16px;
+		max-width: 320px;
+	}
+}

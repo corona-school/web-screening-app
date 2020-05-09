@@ -3,6 +3,7 @@ import "./LoginForm.scss";
 import VerifyIcon from "../icons/verifyIcon.svg";
 import { ApiContext } from "../api/ApiContext";
 import Header from "./Header";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
 	const context = useContext(ApiContext);
@@ -13,16 +14,20 @@ const LoginForm = () => {
 			<Header />
 			<div className="main">
 				<div className="form-container">
+					<div style={{ width: "100%", textAlign: "left" }}>
+						<Link to="/checklist"> zurück</Link>
+					</div>
 					<img
 						style={{ marginBottom: "32px" }}
 						src={VerifyIcon}
 						alt="Verify Icon"
 					/>
-					<h1 className="headline">Wilkommen</h1>
+					<h1 className="headline">Login</h1>
 					<div className="text">
 						<p>
-							Hier kannst Du Dich als Student*in verifizieren lassen. Wir sind
-							heute von 09:00 - 12:00 Uhr und von 15:00 - 18:00 Uhr für Dich da.
+							Hier kannst Du Dich als Student*in einloggen. Wir sind heute von
+							09:00 - 12:00 Uhr und von 15:00 - 18:00 Uhr für Dich da. Viel
+							Spaß!
 						</p>
 					</div>
 					<input
@@ -41,6 +46,7 @@ const LoginForm = () => {
 					{context?.loginError && (
 						<div className="loginError">{context?.loginError}</div>
 					)}
+					<div style={{ height: "40px" }}></div>
 					<button
 						onClick={() => context?.handleLogin(email)}
 						className={"button"}>
