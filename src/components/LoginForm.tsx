@@ -58,7 +58,7 @@ const LoginForm = () => {
 						placeholder="Trage hier deine E-Mail ein.."
 						onKeyUp={(e) => {
 							context?.resetError();
-							if (today.length === 0) {
+							if (e.key === "Enter" && today.length === 0) {
 								message.warning("Wir sind heute leider geschlossen.");
 								return;
 							}
