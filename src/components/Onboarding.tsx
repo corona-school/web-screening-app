@@ -5,6 +5,7 @@ import VerifyIcon from "../icons/verifyIcon.svg";
 import useOpeningHours from "../api/useOpeningHours";
 import "./Onboarding.scss";
 import { Link } from "react-router-dom";
+import { toSentence } from "../utils/timeUtils";
 const days = [
 	"Montag",
 	"Dienstag",
@@ -17,18 +18,6 @@ const days = [
 
 const Onboarding = () => {
 	const { openingHours, loading } = useOpeningHours();
-
-	const toSentence = (arr: string[]) => {
-		if (arr.length === 0) {
-			return "geschlossen";
-		}
-		if (arr.length === 1) {
-			return arr[0] + " Uhr";
-		}
-		return (
-			arr.slice(0, arr.length - 1).join(", ") + " und " + arr.slice(-1) + " Uhr"
-		);
-	};
 
 	const renderDay = (weekString: string, week: number) => {
 		const currentWeek = new Date().getDay() === 0 ? 7 : new Date().getDay();
