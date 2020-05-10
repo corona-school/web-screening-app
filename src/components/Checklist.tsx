@@ -3,8 +3,10 @@ import Header from "./Header";
 import ChecklistIcon from "../icons/checklistIcon.svg";
 import VerifyIcon from "../icons/verifyIcon.svg";
 import { Link } from "react-router-dom";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 import "./Procedure.scss";
 import { randomId } from "../utils/randomId";
+import { Tooltip } from "antd";
 
 const Checklist = () => {
 	return (
@@ -61,7 +63,10 @@ const Checklist = () => {
 								/>
 							</div>
 							<div className="procedure-text">
-								Ich habe meinen Studierendenausweis.
+								Ich habe meinen Studierendenausweis.{" "}
+								<Tooltip title="Der Studierendenausweis dient dem Nachweis, dass du entweder im WiSe 19/20 an einer Hochschule eingeschrieben warst, bzw. es im SoSe 20 noch immer bist. Solltest du deinen Studierendenausweis nicht finden können, können auch andere Dokumente vorgelegt werden, die den Studierendenstatus zu den oben genannten Daten belegen. Bitte zeige diese dann in Kombination mit einem Lichtbildausweis vor.">
+									<QuestionCircleOutlined className="procedure-search-icon" />
+								</Tooltip>
 							</div>
 						</div>
 						<div className="procedure-item">

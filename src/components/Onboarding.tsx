@@ -1,7 +1,7 @@
 import React from "react";
+import BounceLoader from "react-spinners/BounceLoader";
 import Header from "./Header";
 import VerifyIcon from "../icons/verifyIcon.svg";
-
 import useOpeningHours from "../api/useOpeningHours";
 import "./Onboarding.scss";
 import { Link } from "react-router-dom";
@@ -85,8 +85,12 @@ const Onboarding = () => {
 						alt="Verify Icon"
 					/>
 					<h1 className="headline">Wilkommen</h1>
+					{loading && (
+						<div style={{ margin: "32px" }}>
+							<BounceLoader size={150} color={"#ed6b66"} loading={loading} />
+						</div>
+					)}
 					{!loading && renderOpeningHours()}
-
 					{!loading && (
 						<Link to="/procedure">
 							<button className={"button"}>Los Geht's!</button>
