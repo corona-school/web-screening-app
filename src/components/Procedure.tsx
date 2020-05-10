@@ -21,34 +21,37 @@ const Procedure = () => {
 					<h1 className="headline">Der Ablauf</h1>
 					<div className="procedure-text">
 						<p>
-							Wir wollen in einem kurzen Videogespräch mit dir sprechen damit
-							wir deinen Studierenden-Status sicher stellen und die angebotenen
-							Fächer besprechen können. Dies läuft wie folgt ab:
+							Wir möchten dich in einem kurzen Videogespräch kennenlernen. In
+							dem Gespräch fragen wir nach deinem Studierendemausweis, reden
+							kurz über deine angegebenen Fächer und du kannst deine Fragen
+							loswerden.
 						</p>
 					</div>
 					<div className="procedure-container">
 						<div className="procedure-item">
 							<div className="procedure-number">1</div>
 							<div className="procedure-text">
-								Du stellst Dich an die Warteschlange an
+								Du stellst dich in der digitalen Warteschlange an.
 							</div>
 						</div>
 						<div className="procedure-item">
 							<div className="procedure-number">2</div>
 							<div className="procedure-text">
-								Wenn du dran bist wird Dir ein Link zum Videogespräch
-								zugeschickt
+								Wenn du dran bist, wird dir ein Link zum Videogrspräch
+								geschickt.
 							</div>
 						</div>
 						<div className="procedure-item">
 							<div className="procedure-number">3</div>
 							<div className="procedure-text">
-								In einem kurzen Gespräch (ca. 5 min) wirst du verfiziert.
+								Anschließend führst du dein Screeninggespräch mit uns.
 							</div>
 						</div>
 						<div className="procedure-item">
 							<div className="procedure-number">4</div>
-							<div className="procedure-text">Du bist freigeschaltet!</div>
+							<div className="procedure-text">
+								Du wirst freigeschalten und bekommst ein*e Schüler*in gematcht!
+							</div>
 						</div>
 					</div>
 					<div className="procedure-text">

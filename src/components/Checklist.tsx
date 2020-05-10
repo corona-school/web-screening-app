@@ -22,7 +22,10 @@ const Checklist = () => {
 					/>
 					<h1 className="headline">Checkliste</h1>
 					<div className="procedure-text">
-						<p>Bitte überprüfe die folgenden Sachen bevor du Dich anmeldest:</p>
+						<p>
+							Bitte überprüfe die folgenden Sachen, bevor du dich in die
+							Warteschlange einträgst:
+						</p>
 					</div>
 					<div className="procedure-container">
 						<div className="procedure-item">
@@ -33,18 +36,8 @@ const Checklist = () => {
 									alt="Verify Icon"
 								/>
 							</div>
-							<div className="procedure-text">Ich nutze Chrome als Browser</div>
-						</div>
-						<div className="procedure-item">
-							<div className="procedure-number">
-								<img
-									style={{ width: "30px" }}
-									src={VerifyIcon}
-									alt="Verify Icon"
-								/>
-							</div>
 							<div className="procedure-text">
-								Ich habe eine Webcam und ein Mikrofon
+								Ich nutze Chrome als Browser.
 							</div>
 						</div>
 						<div className="procedure-item">
@@ -56,7 +49,7 @@ const Checklist = () => {
 								/>
 							</div>
 							<div className="procedure-text">
-								Ich habe meinen Studierendenausweis
+								Ich habe eine Webcam und ein Mikrofon.
 							</div>
 						</div>
 						<div className="procedure-item">
@@ -67,15 +60,27 @@ const Checklist = () => {
 									alt="Verify Icon"
 								/>
 							</div>
-							<div className="procedure-text">Ich kann Jitsi benutzen</div>
+							<div className="procedure-text">
+								Ich habe meinen Studierendenausweis.
+							</div>
+						</div>
+						<div className="procedure-item">
+							<div className="procedure-number">
+								<img
+									style={{ width: "30px" }}
+									src={VerifyIcon}
+									alt="Verify Icon"
+								/>
+							</div>
+							<div className="procedure-text">Ich kann Jitsi benutzen.</div>
 						</div>
 					</div>
 
 					<div className="procedure-text">
 						<p>
-							Wir nutzen die Webanwendung Jitsi zum durchführen des
-							Videogesprächs. Bitte überprüfe vorher ob deine Webcam und dein
-							Mikrofon in Jitsi funktioniert.
+							Für die Videogespräche nutzen wir die Videoanwendung Jitsi. Bitte
+							überprüfe vorher, ob deine Kamera und dein Mikrophon in Jitsi
+							funktioniert.
 						</p>
 					</div>
 					<div style={{ display: "flex" }}>
