@@ -22,7 +22,7 @@ const Procedure = () => {
 					<div className="procedure-text">
 						<p>
 							Wir möchten dich in einem kurzen Videogespräch kennenlernen. In
-							dem Gespräch fragen wir nach deinem Studierendemausweis, reden
+							dem Gespräch fragen wir nach deinem Studierendenausweis, reden
 							kurz über deine angegebenen Fächer und du kannst deine Fragen
 							loswerden.
 						</p>
@@ -31,13 +31,13 @@ const Procedure = () => {
 						<div className="procedure-item">
 							<div className="procedure-number">1</div>
 							<div className="procedure-text">
-								Du stellst dich in der digitalen Warteschlange an.
+								Du stellst dich in der digitalen Warteschlange an (siehe nächstes Fenster).
 							</div>
 						</div>
 						<div className="procedure-item">
 							<div className="procedure-number">2</div>
 							<div className="procedure-text">
-								Wenn du dran bist, wird dir ein Link zum Videogrspräch
+								Wenn du dran bist, wird dir ein Link zum Videogespräch
 								geschickt.
 							</div>
 						</div>
