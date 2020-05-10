@@ -31,7 +31,9 @@ const Onboarding = () => {
 	};
 
 	const renderDay = (weekString: string, week: number) => {
-		const currentWeek = new Date().getDay();
+		const currentWeek = new Date().getDay() === 0 ? 7 : new Date().getDay();
+
+		console.log(currentWeek);
 
 		if (!openingHours) {
 			return <span>Loading...</span>;
