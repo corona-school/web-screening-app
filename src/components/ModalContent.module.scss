@@ -1,6 +1,6 @@
 @import "../App.scss";
 
-.model-container {
+.modelContainer {
 	display: flex;
 	flex-direction: column;
 	background: white;
@@ -14,7 +14,7 @@
 	flex-direction: row;
 }
 
-.video-call {
+.videoCall {
 	width: 300px;
 	object-fit: contain;
 	margin: 32px;

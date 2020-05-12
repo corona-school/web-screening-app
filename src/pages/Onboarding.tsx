@@ -1,11 +1,13 @@
 import React from "react";
 import BounceLoader from "react-spinners/BounceLoader";
-import Header from "./Header";
 import VerifyIcon from "../icons/verifyIcon.svg";
 import useOpeningHours from "../api/useOpeningHours";
-import "./Onboarding.scss";
+import classes from "./Onboarding.module.scss";
 import { Link } from "react-router-dom";
 import { toSentence } from "../utils/timeUtils";
+import Button from "../components/Button";
+import classnames from "classnames";
+
 const days = [
 	"Montag",
 	"Dienstag",
@@ -31,8 +33,12 @@ const Onboarding = () => {
 		const string = toSentence(today.map((t) => `${t.from} - ${t.to}`));
 
 		return (
-			<div className={`openTime ${currentWeek === week ? "today" : ""}`}>
-				<div>{weekString}:</div> <div className="timeString">{string}</div>
+			<div
+				className={classnames(classes.openTime, {
+					[classes.today]: currentWeek === week,
+				})}>
+				<div>{weekString}:</div>
+				<div className={classes.timeString}>{string}</div>
 			</div>
 		);
 	};
@@ -40,8 +46,8 @@ const Onboarding = () => {
 	const renderOpeningHours = () => {
 		if (!openingHours) {
 			return (
-				<div className="onboardingContainer">
-					<div className="greeting">
+				<div className={classes.onboardingContainer}>
+					<div className={classes.greeting}>
 						Hier kannst Du Dich als Student*in verifizieren lassen. Wir sind
 						jede Woche von Montag bis Samstag in den folgenden Zeiten für Dich
 						da:
@@ -51,12 +57,12 @@ const Onboarding = () => {
 		}
 
 		return (
-			<div className="onboardingContainer">
-				<div className="greeting">
+			<div className={classes.onboardingContainer}>
+				<div className={classes.greeting}>
 					Hier kannst Du Dich als Student*in verifizieren lassen. Wir sind jede
 					Woche von Montag bis Samstags in den folgenden Zeiten für Dich da:
 				</div>
-				<div className="timeContainer">
+				<div className={classes.timeContainer}>
 					{days.map((d, i) => renderDay(d, i + 1))}
 				</div>
 			</div>
@@ -64,30 +70,25 @@ const Onboarding = () => {
 	};
 
 	return (
-		<div className="container">
-			<Header />
-			<div className="main">
-				<div className="form-container">
-					<img
-						style={{ marginBottom: "32px" }}
-						src={VerifyIcon}
-						alt="Verify Icon"
-					/>
-					<h1 className="headline">Wilkommen</h1>
-					{loading && (
-						<div style={{ margin: "32px" }}>
-							<BounceLoader size={150} color={"#ed6b66"} loading={loading} />
-						</div>
-					)}
-					{!loading && renderOpeningHours()}
-					{!loading && (
-						<Link to="/procedure">
-							<button className={"button"}>Los Geht's!</button>
-						</Link>
-					)}
+		<>
+			<img
+				style={{ marginBottom: "32px" }}
+				src={VerifyIcon}
+				alt="Verify Icon"
+			/>
+			<h1 className={classes.headline}>Wilkommen</h1>
+			{loading && (
+				<div style={{ margin: "32px" }}>
+					<BounceLoader size={150} color={"#ed6b66"} loading={loading} />
 				</div>
-			</div>
-		</div>
+			)}
+			{!loading && renderOpeningHours()}
+			{!loading && (
+				<Link to="/procedure">
+					<Button>Los Geht's!</Button>
+				</Link>
+			)}
+		</>
 	);
 };
 

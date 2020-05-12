@@ -67,30 +67,6 @@
 	justify-content: space-between;
 }
 
-.abortButton {
-	cursor: pointer;
-	margin: 16px;
-	padding: 4px 20px;
-	background: white;
-	color: $primary-color;
-	border: solid 4px $primary-color;
-	border-radius: 2px;
-	min-height: 42px;
-	font-size: 16px;
-	width: 120px;
-	transition: all 0.25s ease;
-	outline: none;
-	a {
-		color: white;
-		text-decoration: none;
-	}
-}
-
-.abortButton:hover {
-	background-color: $primary-color;
-	color: white;
-}
-
 .info {
 	line-height: 22px;
 	color: $primary-color;

@@ -1,9 +1,10 @@
 import React from "react";
-import "./Queue.scss";
+import classes from "./Queue.module.scss";
 import { JobInfo } from "../types/ScreeningTypes";
 import { TextMap, HeadlineMap } from "../language/JobLanguage";
-import { IconMap } from "./StatusIcon";
+import { IconMap } from "../components/StatusIcon";
 import MetaTags from "react-meta-tags";
+import Button from "../components/Button";
 
 interface Props {
 	jobInfo: JobInfo;
@@ -38,43 +39,44 @@ const Queue = ({
 	console.log(isLoggedIn, isNotCompleted);
 
 	return (
-		<div className="queue-container">
+		<div className={classes.queueContainer}>
 			<MetaTags>
 				<title>{TitleMap.get(status)}</title>
 			</MetaTags>
 			{IconMap.get(status)}
 
-			<h1 className="queue-headline ">{HeadlineMap.get(status)}</h1>
-			<div className="text">
+			<h1 className={classes.queueHeadline}>{HeadlineMap.get(status)}</h1>
+			<div className={classes.text}>
 				Hey {firstname}! {TextMap.get(status)}
 			</div>
 
 			{position && status === "waiting" && (
-				<div className="position">
-					<div className="positionText">{position}</div>
+				<div className={classes.position}>
+					<div className={classes.positionText}>{position}</div>
 
-					<div className="timeText">
+					<div className={classes.timeText}>
 						ca. {time} - {time + screeningTime}
 						min
 					</div>
 				</div>
 			)}
-			<p className="text" style={{ marginTop: "16px" }}>
-				Wir sind von Montag - Samstag von <b>09:00 - 12:00 sowie von 15:00 - 18:00 Uhr</b> für Dich da. 
+			<p className={classes.text} style={{ marginTop: "16px" }}>
+				Wir sind von Montag - Samstag von{" "}
+				<b>09:00 - 12:00 sowie von 15:00 - 18:00 Uhr</b> für Dich da.
 			</p>
 
-			<div className="actionButtons">
+			<div className={classes.actionButtons}>
 				{isLoggedIn && isNotCompleted && (
-					<button className="abortButton" onClick={handleLogout}>
+					<Button inverse onClick={handleLogout}>
 						Abbrechen
-					</button>
+					</Button>
 				)}
 				{["waiting", "active"].includes(status) && (
-					<button className="button">
+					<Button>
 						<a href={jitsi} target="_blank" rel="noopener noreferrer">
 							Link zum Video-Call
 						</a>
-					</button>
+					</Button>
 				)}
 			</div>
 		</div>

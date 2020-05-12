@@ -1,0 +1,11 @@
+@import "../../App.scss";
+
+.inputStyle {
+	font-size: 16px;
+	padding: 10px 20px;
+	border-radius: 2px;
+	outline: none;
+	border: solid 4px $primary-color;
+	width: 300px;
+	margin: 16px;
+}

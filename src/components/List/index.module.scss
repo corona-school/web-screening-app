@@ -1,0 +1,29 @@
+@import "../../App.scss";
+
+.container {
+	margin-bottom: 16px;
+	display: flex;
+	flex-direction: column;
+
+	.item {
+		margin: 8px 0px;
+		display: flex;
+		align-items: center;
+
+		.itemNumber {
+			border-radius: 50%;
+			width: 30px;
+			height: 30px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: 1px solid #ed6b66;
+		}
+		.itemText {
+			text-align: left;
+			margin-left: 16px;
+			font-size: 16px;
+			max-width: 320px;
+		}
+	}
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import "./ModalContent.scss";
+import classes from "./ModalContent.module.scss";
 import VideoCallImage from "../icons/videocall.svg";
 
 interface Props {
@@ -9,14 +9,18 @@ interface Props {
 
 const ModalContent = ({ screenerName, jitsiLink }: Props) => {
 	return (
-		<div className="model-container">
-			<img className="video-call" src={VideoCallImage} alt="video call" />
-			<h1 className="headlien">Du bist dran!</h1>
-			<div className="text">
+		<div className={classes.modelContainer}>
+			<img
+				className={classes.videoCall}
+				src={VideoCallImage}
+				alt="video call"
+			/>
+			<h1 className={classes.headline}>Du bist dran!</h1>
+			<div className={classes.text}>
 				<span>{screenerName} wartet schon auf dich!</span>
 			</div>
 
-			<div className="buttonContainer">
+			<div className={classes.buttonContainer}>
 				<a
 					href={jitsiLink}
 					className="link-button"

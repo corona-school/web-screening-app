@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import BounceLoader from "react-spinners/BounceLoader";
 import Header from "./components/Header";
 import "./App.scss";
-import Queue from "./components/Queue";
+import Queue from "./pages/Queue";
 import Modal from "react-modal";
 import ModalContent from "./components/ModalContent";
 import { ApiContext } from "./api/ApiContext";
@@ -65,23 +65,19 @@ const App = () => {
 	}
 
 	return (
-		<div className="container">
-			<Header />
-			<div className="main">
-				<div className="form-container">
-					{context?.isLoggedIn && context?.jobInfo && (
-						<Queue
-							isNotCompleted={
-								job ? job.status === "waiting" || job.status === "active" : true
-							}
-							isLoggedIn={context?.isLoggedIn}
-							handleLogout={context?.handleLogout}
-							jobInfo={context?.jobInfo}
-							onlineScreener={context?.onlineScreener}
-						/>
-					)}
-				</div>
-			</div>
+		<>
+			{context?.isLoggedIn && context?.jobInfo && (
+				<Queue
+					isNotCompleted={
+						job ? job.status === "waiting" || job.status === "active" : true
+					}
+					isLoggedIn={context?.isLoggedIn}
+					handleLogout={context?.handleLogout}
+					jobInfo={context?.jobInfo}
+					onlineScreener={context?.onlineScreener}
+				/>
+			)}
+
 			<Modal
 				isOpen={isModalOpen}
 				onRequestClose={() => {
@@ -94,7 +90,7 @@ const App = () => {
 					jitsiLink={context?.jobInfo?.jitsi}
 				/>
 			</Modal>
-		</div>
+		</>
 	);
 };
 

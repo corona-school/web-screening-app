@@ -1,0 +1,49 @@
+@import "../../App.scss";
+
+.buttonBase {
+	cursor: pointer;
+	margin: 16px;
+	padding: 4px 20px;
+	font-size: 16px;
+	min-height: 38px;
+	border-radius: 2px;
+	text-align: center;
+	width: 220px;
+	transition: all 0.25s ease;
+	outline: none;
+	max-lines: 1;
+	a {
+		text-decoration: none;
+	}
+}
+
+.buttonStyle {
+	color: white;
+	background-color: $primary-color;
+	border: solid 4px $primary-color;
+
+	a {
+		color: white;
+	}
+	&:hover {
+		background-color: white;
+		color: $primary-color;
+		a {
+			color: $primary-color;
+		}
+	}
+}
+
+.buttonInverseStyle {
+	background: white;
+	color: $primary-color;
+	border: solid 4px $primary-color;
+
+	a {
+		color: white;
+	}
+	&:hover {
+		background-color: $primary-color;
+		color: white;
+	}
+}

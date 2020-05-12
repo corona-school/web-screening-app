@@ -1,33 +1,44 @@
 import React from "react";
-import Login from "./components/LoginForm";
+import Login from "./pages/LoginForm";
 import { Switch, Route } from "react-router-dom";
 import App from "./App";
 import ApiContext from "./api/ApiContext";
-import Onboarding from "./components/Onboarding";
-import Procedure from "./components/Procedure";
-import Checklist from "./components/Checklist";
+import Onboarding from "./pages/Onboarding";
+import Procedure from "./pages/Procedure";
+import Checklist from "./pages/Checklist";
+import Page from "./pages/Page";
 
 const Routes = () => {
 	return (
 		<Switch>
 			<Route path="/queue/:email">
 				<ApiContext>
-					<App />
+					<Page>
+						<App />
+					</Page>
 				</ApiContext>
 			</Route>
 			<Route path="/login">
 				<ApiContext>
-					<Login />
+					<Page>
+						<Login />
+					</Page>
 				</ApiContext>
 			</Route>
 			<Route path="/procedure">
-				<Procedure />
+				<Page>
+					<Procedure />
+				</Page>
 			</Route>
 			<Route path="/checklist">
-				<Checklist />
+				<Page>
+					<Checklist />
+				</Page>
 			</Route>
 			<Route path="/">
-				<Onboarding />
+				<Page>
+					<Onboarding />
+				</Page>
 			</Route>
 		</Switch>
 	);
