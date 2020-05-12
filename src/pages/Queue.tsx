@@ -4,7 +4,7 @@ import { JobInfo } from "../types/ScreeningTypes";
 import { TextMap, HeadlineMap } from "../language/JobLanguage";
 import { IconMap } from "../components/StatusIcon";
 import MetaTags from "react-meta-tags";
-import Button from "../components/Button";
+import Button, { LinkButton } from "../components/Button";
 
 interface Props {
 	jobInfo: JobInfo;
@@ -72,11 +72,7 @@ const Queue = ({
 					</Button>
 				)}
 				{["waiting", "active"].includes(status) && (
-					<Button>
-						<a href={jitsi} target="_blank" rel="noopener noreferrer">
-							Link zum Video-Call
-						</a>
-					</Button>
+					<LinkButton link={jitsi}>Link zum Video-Call</LinkButton>
 				)}
 			</div>
 		</div>
