@@ -1,19 +1,26 @@
 export type Status = "waiting" | "active" | "completed" | "rejected";
 
 export interface Screener {
+	email: string;
 	firstname: string;
 	lastname: string;
 }
 
-export interface Job {
+export interface StudentData {
+	id: string;
+	email: string;
 	firstname: string;
 	lastname: string;
-	email: string;
-	time: number;
 	jitsi: string;
-	status: Status;
 }
-export interface JobInfo extends Job {
-	position?: number;
-	screener?: Screener;
+
+export interface JobInfo {
+	id: string;
+	data: StudentData;
+	assignedTo?: Screener;
+	timeWaiting: number;
+	timeActive?: number;
+	timeDone?: number;
+	status: Status;
+	position: number;
 }

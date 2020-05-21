@@ -86,8 +86,8 @@ const App = () => {
 				style={customStyles}
 				contentLabel="Verifikation">
 				<ModalContent
-					screenerName={context?.jobInfo?.screener?.firstname || "Max"}
-					jitsiLink={context?.jobInfo?.jitsi}
+					screenerName={context?.jobInfo?.assignedTo?.firstname || "Max"}
+					jitsiLink={context?.jobInfo?.data.jitsi}
 				/>
 			</Modal>
 		</>
