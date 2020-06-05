@@ -77,17 +77,24 @@ const Onboarding = () => {
 				alt="Verify Icon"
 			/>
 			<h1 className={classes.headline}>Wilkommen</h1>
-			{loading && (
+			<div className={classes.onboardingContainer}>
+				<div className={classes.greeting}>
+					Hier kannst Du Dich als Student*in verifizieren lassen. Wir sind
+					wieder nächste Woche Montag von 09:00 - 12:00 und 15:00 bis 18:00 Uhr
+					für Dich da.
+				</div>
+			</div>
+			{/* {loading && (
 				<div style={{ margin: "32px" }}>
 					<BounceLoader size={150} color={"#ed6b66"} loading={loading} />
 				</div>
-			)}
-			{!loading && renderOpeningHours()}
-			{!loading && (
+			)} */}
+			{/* {!loading && renderOpeningHours()} */}
+			{/* {!loading && (
 				<Link to="/procedure">
 					<Button>Los Geht's!</Button>
 				</Link>
-			)}
+			)} */}
 		</>
 	);
 };
