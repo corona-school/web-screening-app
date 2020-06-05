@@ -40,7 +40,7 @@ const Queue = ({
 			: pos * screeningTime
 	);
 
-	console.log(isLoggedIn, isNotCompleted);
+	console.log(time, pos, screeningTime, status);
 
 	return (
 		<div className={classes.queueContainer}>
@@ -54,10 +54,9 @@ const Queue = ({
 				Hey {firstname}! {TextMap.get(status)}
 			</div>
 
-			{position && status === "waiting" && (
+			{status === "waiting" && (
 				<div className={classes.position}>
 					<div className={classes.positionText}>{position}</div>
-
 					<div className={classes.timeText}>
 						ca. {time} - {time + screeningTime}
 						min

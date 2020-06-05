@@ -200,6 +200,8 @@ class ApiContextComponent extends React.Component<
 			});
 		});
 		socket.on(StudentSocketEvents.UPDATE_JOB, (jobInfo: JobInfo) => {
+			console.log("UPDATE JOB", jobInfo);
+
 			if (jobInfo.status === "active" && this.state.grantedNotification) {
 				Push.create("Du bist dran!", {
 					body: `Dein Eignungsgespräch kann beginnen.`,

@@ -5,6 +5,43 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-start;
+
+	.text {
+		font-size: 16px;
+		line-height: 22px;
+		color: #515151;
+		margin: 8px 8px 32px 8px;
+		text-align: center;
+		max-width: 400px;
+	}
+
+	.position {
+		border: 2px solid #ed6b66;
+		padding: 16px;
+		width: 160px;
+		max-height: 48px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-radius: 30px;
+		font-size: 20px;
+		color: #ed6b66;
+		text-align: center;
+
+		.positionText {
+			color: #ed6b66;
+			width: 20px;
+			padding-right: 4px;
+			border-right: 2px solid #ed6b66;
+			margin-right: 4px;
+		}
+
+		.timeText {
+			flex-grow: 1;
+			font-size: 14px;
+			color: #ed6b66;
+		}
+	}
 }
 
 .queueHeadline {
@@ -17,14 +54,6 @@
 .loadingIcon {
 	margin: 32px 32px 64px 32px;
 }
-.text {
-	font-size: 16px;
-	line-height: 22px;
-	color: #515151;
-	margin: 30px 8px 8px 8px;
-	text-align: center;
-	max-width: 300px;
-}
 
 .queueItem {
 	font-size: 16px;
@@ -32,34 +61,6 @@
 	width: 100%;
 	display: flex;
 	justify-content: center;
-}
-
-.position {
-	border: 2px solid #ed6b66;
-	padding: 16px;
-	width: 160px;
-	max-height: 48px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	border-radius: 30px;
-	font-size: 20px;
-	color: #ed6b66;
-	text-align: center;
-}
-
-.positionText {
-	color: #ed6b66;
-	width: 20px;
-	padding-right: 4px;
-	border-right: 2px solid #ed6b66;
-	margin-right: 4px;
-}
-
-.timeText {
-	flex-grow: 1;
-	font-size: 14px;
-	color: #ed6b66;
 }
 
 .actionButtons {
