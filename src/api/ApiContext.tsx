@@ -265,7 +265,7 @@ class ApiContextComponent extends React.Component<
 					data.jobInfo.status !== "completed" &&
 					data.jobInfo.status !== "rejected"
 				) {
-					localStorage.setItem("loginEmail", data.jobInfo.email);
+					localStorage.setItem("loginEmail", data.jobInfo.data.email);
 				}
 
 				this.setState({
@@ -275,7 +275,7 @@ class ApiContextComponent extends React.Component<
 					pendingLogin: false,
 				});
 
-				this.props.history.push("/queue/" + data.jobInfo.email);
+				this.props.history.push("/queue/" + data.jobInfo.data.email);
 			}
 		);
 	}

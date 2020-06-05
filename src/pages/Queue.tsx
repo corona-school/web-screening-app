@@ -15,7 +15,11 @@ interface Props {
 }
 
 const Queue = ({
-	jobInfo: { firstname, position, status, jitsi },
+	jobInfo: {
+		data: { firstname, jitsi },
+		position,
+		status,
+	},
 	onlineScreener,
 	isLoggedIn,
 	isNotCompleted,
