@@ -119,6 +119,10 @@ class ApiContextComponent extends React.Component<
 			console.log("connected to server");
 		});
 
+		socket.on("connect_failed", function () {
+			console.log("connection failed to server");
+		});
+
 		socket.on("disconnect", function () {
 			console.log("disconnected to server");
 		});
@@ -277,6 +281,8 @@ class ApiContextComponent extends React.Component<
 	}
 
 	handleLogin = (email: string) => {
+		console.log(email);
+
 		socket.emit("login", { email });
 	};
 

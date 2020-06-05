@@ -72,6 +72,7 @@ const LoginForm = () => {
 						message.warning("Wir sind heute leider geschlossen.");
 						return;
 					}
+
 					context?.handleLogin(email);
 				}}>
 				Starte Verifizierung
