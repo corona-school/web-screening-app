@@ -60,7 +60,7 @@ const Checklist = () => {
 			<div className="text">
 				<p>
 					Für die Videogespräche nutzen wir die Videoanwendung Jitsi. Bitte
-					überprüfe vorher, ob deine Kamera und dein Mikrophon in Jitsi
+					überprüfe vorher, ob deine Kamera und dein Mikrofon in Jitsi
 					funktioniert.
 				</p>
 			</div>

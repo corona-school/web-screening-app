@@ -11,13 +11,13 @@ export const toSentence = (arr: string[]) => {
 };
 
 export const toSentence2 = (arr: string[]) => {
-	const text = "Hier kannst Du Dich als Student*in verifizieren lassen.";
+	const text = "Hier kannst du dich als Student*in verifizieren lassen.";
 
 	if (arr.length === 0) {
 		return text + " Wir sind heute leider geschlossen.";
 	}
 	if (arr.length === 1) {
-		return text + " Wir sind heute von " + arr[0] + " Uhr für Dich da.";
+		return text + " Wir sind heute von " + arr[0] + " Uhr für dich da.";
 	}
 	return (
 		text +
@@ -25,6 +25,6 @@ export const toSentence2 = (arr: string[]) => {
 		arr.slice(0, arr.length - 1).join(", ") +
 		" und " +
 		arr.slice(-1) +
-		" Uhr für Dich da."
+		" Uhr für dich da."
 	);
 };

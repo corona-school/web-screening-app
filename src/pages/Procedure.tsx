@@ -19,7 +19,7 @@ const Procedure = () => {
 			<div className="text">
 				<p>
 					Wir möchten dich in einem kurzen Videogespräch kennenlernen. In dem
-					Gespräch fragen wir nach deinem Studierendemausweis, reden kurz über
+					Gespräch fragen wir nach deinem Studierendenausweis, reden kurz über
 					deine angegebenen Fächer und du kannst deine Fragen loswerden.
 				</p>
 			</div>
@@ -28,13 +28,13 @@ const Procedure = () => {
 					Du stellst dich in der digitalen Warteschlange an.
 				</List.Item>
 				<List.Item itemNumber={2}>
-					Wenn du dran bist, wird dir ein Link zum Videogrspräch geschickt.
+					Wenn du dran bist, wird dir ein Link zum Videogespräch geschickt.
 				</List.Item>
 				<List.Item itemNumber={3}>
 					Anschließend führst du dein Screeninggespräch mit uns.
 				</List.Item>
 				<List.Item itemNumber={4}>
-					Du wirst freigeschalten und bekommst ein*e Schüler*in gematcht!
+					Du wirst freigeschaltet und bekommst ein*e Schüler*in gematcht!
 				</List.Item>
 			</List>
 

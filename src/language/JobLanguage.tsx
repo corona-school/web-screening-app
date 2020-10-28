@@ -5,7 +5,7 @@ const TextMap = new Map([
   ],
   [
     "active",
-    "Ein Mitarbeiter*in hat jetzt Zeit für Dich. Klick auf dem Link um das Kennenlerngespräch zu starten.",
+    "Ein Mitarbeiter*in hat jetzt Zeit für dich. Klick auf dem Link um das Kennenlerngespräch zu starten.",
   ],
   ["completed", "Herzlichen Glückwunsch! Du wurdest erfolgreich verifiziert!"],
   ["rejected", "Es tut uns leid. Du konntest nicht verifiziert werden."],

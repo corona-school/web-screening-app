@@ -65,7 +65,7 @@ const Queue = ({
 			)}
 			<p className={classes.text} style={{ marginTop: "16px" }}>
 				Wir sind von Montag - Samstag von{" "}
-				<b>09:00 - 12:00 sowie von 15:00 - 18:00 Uhr</b> für Dich da.
+				<b>09:00 - 12:00 sowie von 15:00 - 18:00 Uhr</b> für dich da.
 			</p>
 
 			<div className={classes.actionButtons}>

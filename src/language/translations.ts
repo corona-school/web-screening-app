@@ -9,7 +9,7 @@ export const translation = {
 		en:
 			"An employee now has time for you. Click on the link to start the introductory conversation.",
 		de:
-			"Ein Mitarbeiter*in hat jetzt Zeit für Dich. Klick auf dem Link um das Kennenlerngespräch zu starten.",
+			"Ein Mitarbeiter*in hat jetzt Zeit für dich. Klick auf dem Link um das Kennenlerngespräch zu starten.",
 	},
 	JOB_STATUS_COMPLETED_DESCRIPTION: {
 		en: "Congratulations! You have been successfully verified!",
@@ -47,7 +47,7 @@ export const translation = {
 		en:
 			"Here you can get verified as a student. We are here for you from <b> 9:00 a.m. - 12:00 p.m. and from 3:00 p.m. - 6:00 p.m. </b>.",
 		de:
-			"Hier kannst Du Dich als Student*in verifizieren lassen. Wir sind heute von <b>09:00 - 12:00 sowie von 15:00 - 18:00 Uhr</b> für Dich da.",
+			"Hier kannst du dich als Student*in verifizieren lassen. Wir sind heute von <b>09:00 - 12:00 sowie von 15:00 - 18:00 Uhr</b> für dich da.",
 	},
 	LOGIN_FORM_EMAIL_PLACEHOLDER: {
 		en: "Enter your email here ..",
