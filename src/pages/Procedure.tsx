@@ -19,7 +19,7 @@ const Procedure = () => {
 			<div className="text">
 				<p>
 					Wir möchten dich in einem kurzen Videogespräch kennenlernen. In dem
-					Gespräch fragen wir nach deinem Studierendenausweis, reden kurz über
+					Gespräch möchten wir deinen Status verifizieren, reden kurz über 
 					deine angegebenen Fächer und du kannst deine Fragen loswerden.
 				</p>
 			</div>

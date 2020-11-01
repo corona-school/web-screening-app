@@ -44,8 +44,8 @@ const Checklist = () => {
 					itemNumber={
 						<img style={{ width: "30px" }} src={VerifyIcon} alt="Verify Icon" />
 					}>
-					Ich habe meinen Studierendenausweis.{" "}
-					<Tooltip title="Der Studierendenausweis dient dem Nachweis, dass du entweder im WiSe 19/20 an einer Hochschule eingeschrieben warst, bzw. es im SoSe 20 noch immer bist. Solltest du deinen Studierendenausweis nicht finden können, können auch andere Dokumente vorgelegt werden, die den Studierendenstatus zu den oben genannten Daten belegen. Bitte zeige diese dann in Kombination mit einem Lichtbildausweis vor.">
+					Ich habe meinen Statusnachweis.{" "}
+					<Tooltip title="Wir werden dich bitten, deinen Statusausweis kurz in die Kamera zu halten. Wenn du Student*in bist, reicht als Statusausweis dein Studierendenausweis oder ein ähnlicher Nachweis der bezeugt, dass du in diesem oder im letzten Semester an einer Hochschule  eingeschrieben bist. Wenn du kein*e Student*in bist, so bereite bitte einen Lichtbildausweis, wie Führerschein oder Personalausweis vor. Du kannst gerne alles außer Name und Bild abkleben oder abdecken. Hast du dich zum 1:1-Projektcoaching angemeldet und bist kein*e Student*in, so lege bitte außerdem deinen Jugend forscht-Nachweis bereit.">
 						<QuestionCircleOutlined className={classes.procedureSearchIcon} />
 					</Tooltip>
 				</List.Item>
