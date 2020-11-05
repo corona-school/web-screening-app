@@ -48,7 +48,7 @@ const Onboarding = () => {
 			return (
 				<div className={classes.onboardingContainer}>
 					<div className={classes.greeting}>
-						Hier kannst du dich als Student*in verifizieren lassen. Wir sind
+						Hier kannst du dich verifizieren lassen. Wir sind
 						jede Woche von Montag bis Samstag in den folgenden Zeiten für dich
 						da:
 					</div>
@@ -59,7 +59,7 @@ const Onboarding = () => {
 		return (
 			<div className={classes.onboardingContainer}>
 				<div className={classes.greeting}>
-					Hier kannst du dich als Student*in verifizieren lassen. Wir sind jede
+					Hier kannst du dich verifizieren lassen. Wir sind jede
 					Woche von Montag bis Samstag in den folgenden Zeiten für dich da:
 				</div>
 				<div className={classes.timeContainer}>

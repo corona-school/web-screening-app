@@ -254,7 +254,7 @@ class ApiContextComponent extends React.Component<
 						pendingLogin: false,
 						loginError: hasEmailInURL
 							? null
-							: "Wir konnten keine Student*innen mit dieser E-Mail finden.",
+							: "Wir konnten keine Personen mit dieser E-Mail finden.",
 					});
 
 					if (this.props.match.params.email) {

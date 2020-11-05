@@ -45,9 +45,9 @@ export const translation = {
 	},
 	LOGIN_FORM_DESCRIPTION: {
 		en:
-			"Here you can get verified as a student. We are here for you from <b> 9:00 a.m. - 12:00 p.m. and from 3:00 p.m. - 6:00 p.m. </b>.",
+			"Here you can get verified. We are here for you from <b> 9:00 a.m. - 12:00 p.m. and from 3:00 p.m. - 6:00 p.m. </b>.",
 		de:
-			"Hier kannst du dich als Student*in verifizieren lassen. Wir sind heute von <b>09:00 - 12:00 sowie von 15:00 - 18:00 Uhr</b> für dich da.",
+			"Hier kannst du dich verifizieren lassen. Wir sind heute von <b>09:00 - 12:00 sowie von 15:00 - 18:00 Uhr</b> für dich da.",
 	},
 	LOGIN_FORM_EMAIL_PLACEHOLDER: {
 		en: "Enter your email here ..",

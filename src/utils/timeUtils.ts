@@ -11,7 +11,7 @@ export const toSentence = (arr: string[]) => {
 };
 
 export const toSentence2 = (arr: string[]) => {
-	const text = "Hier kannst du dich als Student*in verifizieren lassen.";
+	const text = "Hier kannst du dich verifizieren lassen.";
 
 	if (arr.length === 0) {
 		return text + " Wir sind heute leider geschlossen.";
