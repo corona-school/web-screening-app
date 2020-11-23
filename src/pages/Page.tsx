@@ -9,6 +9,12 @@ const Page: React.FunctionComponent = (props) => {
 			<div className={classes.main}>
 				<div className={classes.formContainer}>{props.children}</div>
 			</div>
+			<div className={classes.legal}>
+				<a href="https://www.corona-school.de/datenschutz-2">
+					Datenschutzerklärung
+				</a>
+				<a href="https://www.corona-school.de/impressum"> Impressum </a>
+        	</div>
 		</div>
 	);
 };

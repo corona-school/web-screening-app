@@ -33,3 +33,20 @@
 	min-height: 600px;
 	padding: 16px;
 }
+
+.legal {
+	height: 30px;
+	width: 100%;
+	max-width: 500px;
+	text-align: center;
+	background-color: $background-color;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+.legal a {
+	margin: 10px;
+	color: $primary-color;
+	font-weight: bold;
+}
