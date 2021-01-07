@@ -1,17 +1,5 @@
 @import "../App.scss";
 
-.openTime {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	margin: 4px 0px;
-}
-.timeString {
-	margin-left: 32px;
-	text-align: right;
-}
-
 .timeContainer {
 	display: flex;
 	flex-direction: column;
@@ -20,10 +8,6 @@
 .greeting {
 	margin: 16px 0px;
 	text-align: center;
-}
-
-.today {
-	font-weight: bold;
 }
 
 .onboardingContainer {

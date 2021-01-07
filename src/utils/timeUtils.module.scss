@@ -1,0 +1,16 @@
+.openTime {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px 0px;
+}
+
+.timeString {
+  margin-left: 32px;
+  text-align: right;
+}
+
+.today {
+  font-weight: bold;
+}

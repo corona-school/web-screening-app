@@ -5,6 +5,8 @@ import { TextMap, HeadlineMap } from "../language/JobLanguage";
 import { IconMap } from "../components/StatusIcon";
 import MetaTags from "react-meta-tags";
 import Button, { LinkButton } from "../components/Button";
+import {listOpeningHours} from "../utils/timeUtils";
+import useOpeningHours from "../api/useOpeningHours";
 
 interface Props {
 	jobInfo: JobInfo;
@@ -40,6 +42,8 @@ const Queue = ({
 			: pos * screeningTime
 	);
 
+	const { openingHours, loading } = useOpeningHours();
+
 	console.log(time, pos, screeningTime, status);
 
 	return (
@@ -64,9 +68,12 @@ const Queue = ({
 				</div>
 			)}
 			<p className={classes.text} style={{ marginTop: "16px" }}>
-				Wir sind von Montag - Samstag von{" "}
-				<b>09:00 - 12:00 sowie von 15:00 - 18:00 Uhr</b> für dich da.
+				Wir sind von Montag - Samstag in den folgenden Zeiten für dich da:
 			</p>
+			<p className={classes.text}>
+				{openingHours && listOpeningHours(openingHours, loading)}
+			</p>
+
 
 			<div className={classes.actionButtons}>
 				{isLoggedIn && isNotCompleted && (
