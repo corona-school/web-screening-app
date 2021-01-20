@@ -53,7 +53,7 @@ export const listOpeningHours = (openingHours: ITime[], loading: boolean) => {
 		const day = openingHours.filter(t => t.week === i+1);
 		const timeString = toSentence(day.map(t => `${t.from} - ${t.to}`));
 		return (
-			<div className={classnames(classes.openTime, {[classes.today]: currentDay === i})}>
+			<div className={classnames(classes.openTime, {[classes.today]: currentDay === i+1})}>
 				<div>{d}:</div>
 				<div className={classes.timeString}>{timeString}</div>
 			</div>
