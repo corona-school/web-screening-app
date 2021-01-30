@@ -4,7 +4,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 import { message } from "antd";
 import VerifyIcon from "../icons/verifyIcon.svg";
 import { ApiContext } from "../api/ApiContext";
-import useOpeningHours from "../api/useOpeningHours";
+import useOpeningHours, {ITime} from "../api/useOpeningHours";
 import { toSentence2 } from "../utils/timeUtils";
 import classes from "./LoginForm.module.scss";
 import Button from "../components/Button";
@@ -26,9 +26,28 @@ const LoginForm = () => {
 	}
 
 	const currentWeek = new Date().getDay() === 0 ? 7 : new Date().getDay();
-	const today = openingHours
-		.filter((t) => t.week === currentWeek)
-		.map((t) => `${t.from} - ${t.to}`);
+	const todayOpeningHours = openingHours.find((t) => t.week === currentWeek);
+
+	const openingHourRange = (time: ITime) => {
+		return `${time.from} - ${time.to}`;
+	}
+
+	const isCurrentlyClosed = (todayOpeningHours: ITime | undefined) => {
+		if (!todayOpeningHours) return true;
+
+		const now = new Date();
+		const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+		const startTime = todayOpeningHours.from.split(":").map(Number);
+		const startMinutes = startTime[0] * 60 + startTime[1];
+
+		const endTime = todayOpeningHours.to.split(":").map(Number);
+		const endMinutes = endTime[0] * 60 + endTime[1];
+
+		return startMinutes > currentMinutes || currentMinutes > endMinutes;
+	}
+
+	console.log(isCurrentlyClosed(todayOpeningHours));
 
 	return (
 		<>
@@ -42,7 +61,7 @@ const LoginForm = () => {
 			/>
 			<h1 className={classes.headline}>Login</h1>
 			<div className="text">
-				<p>{toSentence2(today)}</p>
+				<p>{toSentence2(todayOpeningHours ? [openingHourRange(todayOpeningHours)] : [])}</p>
 			</div>
 			<Input
 				type="email"
@@ -51,11 +70,11 @@ const LoginForm = () => {
 				placeholder="Trage hier deine E-Mail ein.."
 				onKeyUp={(e) => {
 					context?.resetError();
-					if (e.key === "Enter" && today.length === 0) {
-						message.warning("Wir sind heute leider geschlossen.");
+					if (e.key === "Enter" && isCurrentlyClosed(todayOpeningHours)) {
+						message.warning("Wir sind momentan leider geschlossen.");
 						return;
 					}
-					if (e.key === "Enter") {
+					if (e.key === "Enter" ) {
 						context?.handleLogin(email);
 					}
 				}}
@@ -68,8 +87,8 @@ const LoginForm = () => {
 
 			<Button
 				onClick={() => {
-					if (today.length === 0) {
-						message.warning("Wir sind heute leider geschlossen.");
+					if (isCurrentlyClosed(todayOpeningHours)){
+						message.warning("Wir sind momentan leider geschlossen.");
 						return;
 					}
 
