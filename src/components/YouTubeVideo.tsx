@@ -4,11 +4,13 @@ declare global {
   interface Window {
     YT: any;
     onYouTubeIframeAPIReady: any;
+    onPlayerReady: any;
   }
 }
 
 interface IVideoProps {
   id: string;
+  playOnReady?: boolean;
   className?: string;
   style?: CSSProperties;
 }
@@ -28,9 +30,18 @@ class YouTubeVideo extends React.Component<IVideoProps> {
     window.onYouTubeIframeAPIReady = () => {
       this.player = new window.YT.Player(`video-${this.props.id}`, {
         videoId: this.props.id,
+        events: {
+          "onReady": window.onPlayerReady,
+        }
       });
       console.log("API ready");
     };
+
+    window.onPlayerReady = () => {
+      if (this.props.playOnReady) {
+        this.player.playVideo();
+      }
+    }
   }
 
   componentWillUnmount() {
