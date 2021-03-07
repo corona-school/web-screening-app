@@ -76,8 +76,14 @@ const Queue = ({
 					</div>
 				</>
 			)}
-			<p className={classes.text} style={{ marginTop: "16px" }}>
-				Wir sind von Montag - Samstag in den folgenden Zeiten für dich da:
+			<p
+				className={classes.text}
+				style={{
+					marginTop: "16px",
+					marginBottom: "8px",
+					fontWeight: "bold"
+				}}>
+				Öffnungszeiten
 			</p>
 			<p className={classes.text}>
 				{openingHours && listOpeningHours(openingHours, loading)}
@@ -96,6 +102,6 @@ const Queue = ({
 			</div>
 		</div>
 	);
-};
+}
 
 export default Queue;
