@@ -64,7 +64,6 @@ const Queue = ({
 					{screeningTypes.includes("intern") && (
 						<YouTubeVideo
 							id={process.env.REACT_APP_INTERN_VIDEO ?? ""}
-							playOnReady
 							className={classes.video}
 						/>
 						)}
