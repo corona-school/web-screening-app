@@ -7,6 +7,7 @@ import MetaTags from "react-meta-tags";
 import Button, { LinkButton } from "../components/Button";
 import {listOpeningHours} from "../utils/timeUtils";
 import useOpeningHours from "../api/useOpeningHours";
+import YouTubeVideo from "../components/YouTubeVideo";
 
 interface Props {
 	jobInfo: JobInfo;
@@ -18,7 +19,7 @@ interface Props {
 
 const Queue = ({
 	jobInfo: {
-		data: { firstname, jitsi },
+		data: { firstName, jitsi, screeningTypes },
 		position,
 		status,
 	},
@@ -44,7 +45,7 @@ const Queue = ({
 
 	const { openingHours, loading } = useOpeningHours();
 
-	console.log(time, pos, screeningTime, status);
+	console.log(time, pos, screeningTime, status, firstName);
 
 	return (
 		<div className={classes.queueContainer}>
@@ -55,20 +56,35 @@ const Queue = ({
 
 			<h1 className={classes.queueHeadline}>{HeadlineMap.get(status)}</h1>
 			<div className={classes.text}>
-				Hey {firstname}! {TextMap.get(status)}
+				Hey {firstName}! {TextMap.get(status === "waiting" && screeningTypes.includes("intern") ? "waiting-intern" : status)}
 			</div>
 
 			{status === "waiting" && (
-				<div className={classes.position}>
-					<div className={classes.positionText}>{position}</div>
-					<div className={classes.timeText}>
-						ca. {time} - {time + screeningTime}
-						min
+				<>
+					{screeningTypes.includes("intern") && (
+						<YouTubeVideo
+							id={process.env.REACT_APP_INTERN_VIDEO ?? ""}
+							playOnReady
+							className={classes.video}
+						/>
+						)}
+					<div className={classes.position}>
+						<div className={classes.positionText}>{position}</div>
+						<div className={classes.timeText}>
+							ca. {time} - {time + screeningTime}
+							min
+						</div>
 					</div>
-				</div>
+				</>
 			)}
-			<p className={classes.text} style={{ marginTop: "16px" }}>
-				Wir sind von Montag - Samstag in den folgenden Zeiten für dich da:
+			<p
+				className={classes.text}
+				style={{
+					marginTop: "16px",
+					marginBottom: "8px",
+					fontWeight: "bold"
+				}}>
+				Öffnungszeiten
 			</p>
 			<p className={classes.text}>
 				{openingHours && listOpeningHours(openingHours, loading)}
@@ -87,6 +103,6 @@ const Queue = ({
 			</div>
 		</div>
 	);
-};
+}
 
 export default Queue;

@@ -4,6 +4,10 @@ const TextMap = new Map([
     "Du bist bald mit deinem Kennenlerngespräch dran, bleibe bitte auf dieser Seite. Wenn du willst kannst du dich schon vorbereiten und dem Video-Call beitreten.",
   ],
   [
+    "waiting-intern",
+    "Wir freuen uns, dass wir dich gleich kennenlernen dürfen. Während du wartest bitten wir dich, dieses kurze Video mit weiteren Informationen zum Praktikum anzusehen, damit du einen besseren Überlick erhältst und wir spezifischer auf deine Fragen eingehen können. Bis gleich!"
+  ],
+  [
     "active",
     "Ein Mitarbeiter*in hat jetzt Zeit für dich. Klick auf dem Link um das Kennenlerngespräch zu starten.",
   ],

@@ -1,5 +1,7 @@
 export type Status = "waiting" | "active" | "completed" | "rejected";
 
+export type ScreeningType = "intern" | "instructor" | "tutor" | "projectCoach";
+
 export interface Screener {
 	email: string;
 	firstname: string;
@@ -9,9 +11,10 @@ export interface Screener {
 export interface StudentData {
 	id: string;
 	email: string;
-	firstname: string;
-	lastname: string;
+	firstName: string;
+	lastName: string;
 	jitsi: string;
+	screeningTypes: ScreeningType[];
 }
 
 export interface JobInfo {
