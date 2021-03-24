@@ -59,6 +59,14 @@ const Queue = ({
 				Hey {firstName}! {TextMap.get(status === "waiting" && screeningTypes.includes("intern") ? "waiting-intern" : status)}
 			</div>
 
+			{status === "completed" && (
+				<div className={classes.text}>
+					Gehe jetzt in deinen User-Bereich:{' '}
+					<br/>
+					<a href='https://my.corona-school.de/'>my.corona-school.de</a>
+				</div>
+			)}
+
 			{status === "waiting" && (
 				<>
 					{screeningTypes.includes("intern") && (
