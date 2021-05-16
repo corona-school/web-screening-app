@@ -63,7 +63,7 @@ const Queue = ({
 				<div className={classes.text}>
 					Gehe jetzt in deinen User-Bereich:{' '}
 					<br/>
-					<a href='https://my.corona-school.de/'>my.corona-school.de</a>
+					<a href='https://my.lern-fair.de/'>my.lern-fair.de</a>
 				</div>
 			)}
 
