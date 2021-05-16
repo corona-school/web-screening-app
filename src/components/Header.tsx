@@ -9,7 +9,7 @@ const Header = () => {
 	return (
 		<div className={classes.header}>
 			<div>
-				<img src={logo} className={classes.logo} alt="Corona School Logo"></img>
+				<img src={logo} className={classes.logo} alt="Lern-Fair Logo" />
 
 				<Title
 					level={2}
@@ -18,7 +18,7 @@ const Header = () => {
 						fontWeight: "bold",
 						margin: "0 0 0 12px",
 					}}>
-					Corona School
+					Lern-Fair
 				</Title>
 			</div>
 		</div>
