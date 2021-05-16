@@ -29,10 +29,10 @@ const Queue = ({
 	handleLogout,
 }: Props) => {
 	const TitleMap = new Map([
-		["waiting", `Corona School | Warteschlange`],
-		["active", "Corona School | Kennenlerngespräch"],
-		["completed", "Corona School | Fertig"],
-		["rejected", "Corona School | Abgelehnt"],
+		["waiting", `Lern-Fair | Warteschlange`],
+		["active", "Lern-Fair | Kennenlerngespräch"],
+		["completed", "Lern-Fair | Fertig"],
+		["rejected", "Lern-Fair | Abgelehnt"],
 	]);
 
 	const screeningTime = 10;
