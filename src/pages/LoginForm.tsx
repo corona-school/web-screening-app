@@ -32,25 +32,31 @@ const LoginForm = () => {
 	const weekDay = nowInGermany.weekday === 0 ? 7 : nowInGermany.weekday;
 	const todayOpeningHours = openingHours.find((t) => t.week === weekDay);
 
+	function fromTime(time: ITime) {
+		const [fromHours, fromMinutes] = time.from.split(":").map(Number);
+		const [toHours,   toMinutes] = time.to.split(":").map(Number);
+		
+		
+		const from = DateTime.fromObject({ hour: +fromHours, minute: +fromMinutes, zone: "Europe/Berlin" });
+		const to =   DateTime.fromObject({ hour: +toHours, minute: +toMinutes, zone: "Europe/Berlin" });
+		return { from, to };
+	}
+
 	const openingHourRange = (time: ITime) => {
-		return `${time.from} - ${time.to}`;
+		const { from, to } = fromTime(time);
+		return `${from.hour}:${from.minute} - ${to.hour}:${to.minute}`;
 	}
 
 	const isCurrentlyClosed = (todayOpeningHours: ITime | undefined) => {
 		if (!todayOpeningHours) return true;
 
-		
-		const [startHours, startMinutes] = todayOpeningHours.from.split(":").map(Number);
-		const [endHours,   endMinutes] = todayOpeningHours.to.split(":").map(Number);
-		
+		const { from, to } = fromTime(todayOpeningHours);
 		const nowLocale = DateTime.now().setZone("local");
 
-		const start = DateTime.fromObject({ hour: +startHours, minute: +startMinutes, zone: "Europe/Berlin" });
-		const end =   DateTime.fromObject({ hour: +endHours, minute: +endMinutes, zone: "Europe/Berlin" });
 		
-		const currentlyClosed = start > nowLocale || nowLocale > end;
+		const currentlyClosed = from > nowLocale || nowLocale > to;
 
-		console.log("nowLocale", nowLocale, "start", start, "end", end, "currentlyClosed", currentlyClosed);
+		console.log("nowLocale", nowLocale, "from", from, "to", to, "currentlyClosed", currentlyClosed);
 
 		return currentlyClosed;
 	}
@@ -69,6 +75,7 @@ const LoginForm = () => {
 			<h1 className={classes.headline}>Login</h1>
 			<div className="text">
 				<p>{toSentence2(todayOpeningHours ? [openingHourRange(todayOpeningHours)] : [])}</p>
+				<small>Uhrzeiten in deiner lokalen Zeitzone</small>
 			</div>
 			<Input
 				type="email"
