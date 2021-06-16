@@ -5,11 +5,11 @@ import { message } from "antd";
 import VerifyIcon from "../icons/verifyIcon.svg";
 import { ApiContext } from "../api/ApiContext";
 import useOpeningHours, {ITime} from "../api/useOpeningHours";
-import { toSentence2 } from "../utils/timeUtils";
+import { getOpeningHoursToday, getRangeString, isCurrentlyClosed, toSentence2 } from "../utils/timeUtils";
 import classes from "./LoginForm.module.scss";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import { DateTime } from "luxon";
+
 
 const LoginForm = () => {
 	const context = useContext(ApiContext);
@@ -26,41 +26,8 @@ const LoginForm = () => {
 		);
 	}
 
-	const nowInGermany = DateTime.now().setZone("Europe/Berlin");
-	console.log("nowInGermany", nowInGermany);
 
-	const weekDay = nowInGermany.weekday === 0 ? 7 : nowInGermany.weekday;
-	const todayOpeningHours = openingHours.find((t) => t.week === weekDay);
-
-	function fromTime(time: ITime) {
-		const [fromHours, fromMinutes] = time.from.split(":").map(Number);
-		const [toHours,   toMinutes] = time.to.split(":").map(Number);
-		
-		
-		const from = DateTime.fromObject({ hour: +fromHours, minute: +fromMinutes, zone: "Europe/Berlin" });
-		const to =   DateTime.fromObject({ hour: +toHours, minute: +toMinutes, zone: "Europe/Berlin" });
-		return { from, to };
-	}
-
-	const openingHourRange = (time: ITime) => {
-		const { from, to } = fromTime(time);
-		return `${from.hour}:${from.minute} - ${to.hour}:${to.minute}`;
-	}
-
-	const isCurrentlyClosed = (todayOpeningHours: ITime | undefined) => {
-		if (!todayOpeningHours) return true;
-
-		const { from, to } = fromTime(todayOpeningHours);
-		const nowLocale = DateTime.now().setZone("local");
-
-		
-		const currentlyClosed = from > nowLocale || nowLocale > to;
-
-		console.log("nowLocale", nowLocale, "from", from, "to", to, "currentlyClosed", currentlyClosed);
-
-		return currentlyClosed;
-	}
-
+	const todayOpeningHours = getOpeningHoursToday(openingHours);
 
 	return (
 		<>
@@ -74,7 +41,7 @@ const LoginForm = () => {
 			/>
 			<h1 className={classes.headline}>Login</h1>
 			<div className="text">
-				<p>{toSentence2(todayOpeningHours ? [openingHourRange(todayOpeningHours)] : [])}</p>
+				<p>{toSentence2(todayOpeningHours ? [getRangeString(todayOpeningHours)] : [])}</p>
 				<small>Uhrzeiten in deiner lokalen Zeitzone</small>
 			</div>
 			<Input
