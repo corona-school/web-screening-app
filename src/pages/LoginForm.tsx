@@ -9,6 +9,7 @@ import { toSentence2 } from "../utils/timeUtils";
 import classes from "./LoginForm.module.scss";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import { DateTime } from "luxon";
 
 const LoginForm = () => {
 	const context = useContext(ApiContext);
@@ -25,8 +26,11 @@ const LoginForm = () => {
 		);
 	}
 
-	const currentWeek = new Date().getDay() === 0 ? 7 : new Date().getDay();
-	const todayOpeningHours = openingHours.find((t) => t.week === currentWeek);
+	const nowInGermany = DateTime.now().setZone("Europe/Berlin");
+	console.log("nowInGermany", nowInGermany);
+
+	const weekDay = nowInGermany.weekday === 0 ? 7 : nowInGermany.weekday;
+	const todayOpeningHours = openingHours.find((t) => t.week === weekDay);
 
 	const openingHourRange = (time: ITime) => {
 		return `${time.from} - ${time.to}`;
@@ -35,19 +39,22 @@ const LoginForm = () => {
 	const isCurrentlyClosed = (todayOpeningHours: ITime | undefined) => {
 		if (!todayOpeningHours) return true;
 
-		const now = new Date();
-		const currentMinutes = now.getHours() * 60 + now.getMinutes();
+		
+		const [startHours, startMinutes] = todayOpeningHours.from.split(":").map(Number);
+		const [endHours,   endMinutes] = todayOpeningHours.to.split(":").map(Number);
+		
+		const nowLocale = DateTime.now().setZone("local");
 
-		const startTime = todayOpeningHours.from.split(":").map(Number);
-		const startMinutes = startTime[0] * 60 + startTime[1];
+		const start = DateTime.fromObject({ hour: +startHours, minute: +startMinutes, zone: "Europe/Berlin" });
+		const end =   DateTime.fromObject({ hour: +endHours, minute: +endMinutes, zone: "Europe/Berlin" });
+		
+		const currentlyClosed = start > nowLocale || nowLocale > end;
 
-		const endTime = todayOpeningHours.to.split(":").map(Number);
-		const endMinutes = endTime[0] * 60 + endTime[1];
+		console.log("nowLocale", nowLocale, "start", start, "end", end, "currentlyClosed", currentlyClosed);
 
-		return startMinutes > currentMinutes || currentMinutes > endMinutes;
+		return currentlyClosed;
 	}
 
-	console.log(isCurrentlyClosed(todayOpeningHours));
 
 	return (
 		<>
