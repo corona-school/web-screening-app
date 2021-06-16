@@ -40,6 +40,7 @@ export function getOpeningHoursToday(openingHours: ITime[]): ITime | undefined {
 
 export function getRangeString(time: ITime) {
 	const { from, to } = fromTime(time);
+	console.log("getRangeString", "from", from, "to", to);
 	return `${from.hour}:${("" + from.minute).padStart(2, "0")} - ${to.hour}:${("" + to.minute).padStart(2, "0")}`;
 }
 
