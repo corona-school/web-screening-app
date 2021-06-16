@@ -18,9 +18,8 @@ export function fromTime(time: ITime) {
 	const [fromHours, fromMinutes] = time.from.split(":").map(Number);
 	const [toHours,   toMinutes] = time.to.split(":").map(Number);
 	
-	
-	const from = DateTime.fromObject({ hour: +fromHours, minute: +fromMinutes, zone: "Europe/Berlin" });
-	const to =   DateTime.fromObject({ hour: +toHours, minute: +toMinutes, zone: "Europe/Berlin" });
+	const from = DateTime.fromObject({ hour: +fromHours, minute: +fromMinutes, zone: "Europe/Berlin" }).setZone("local");
+	const to =   DateTime.fromObject({ hour: +toHours, minute: +toMinutes, zone: "Europe/Berlin" }).setZone("local");
 	return { from, to };
 }
 
