@@ -5,10 +5,11 @@ import { message } from "antd";
 import VerifyIcon from "../icons/verifyIcon.svg";
 import { ApiContext } from "../api/ApiContext";
 import useOpeningHours, {ITime} from "../api/useOpeningHours";
-import { toSentence2 } from "../utils/timeUtils";
+import { getOpeningHoursToday, getRangeString, isCurrentlyClosed, toSentence2 } from "../utils/timeUtils";
 import classes from "./LoginForm.module.scss";
 import Button from "../components/Button";
 import Input from "../components/Input";
+
 
 const LoginForm = () => {
 	const context = useContext(ApiContext);
@@ -25,29 +26,8 @@ const LoginForm = () => {
 		);
 	}
 
-	const currentWeek = new Date().getDay() === 0 ? 7 : new Date().getDay();
-	const todayOpeningHours = openingHours.find((t) => t.week === currentWeek);
 
-	const openingHourRange = (time: ITime) => {
-		return `${time.from} - ${time.to}`;
-	}
-
-	const isCurrentlyClosed = (todayOpeningHours: ITime | undefined) => {
-		if (!todayOpeningHours) return true;
-
-		const now = new Date();
-		const currentMinutes = now.getHours() * 60 + now.getMinutes();
-
-		const startTime = todayOpeningHours.from.split(":").map(Number);
-		const startMinutes = startTime[0] * 60 + startTime[1];
-
-		const endTime = todayOpeningHours.to.split(":").map(Number);
-		const endMinutes = endTime[0] * 60 + endTime[1];
-
-		return startMinutes > currentMinutes || currentMinutes > endMinutes;
-	}
-
-	console.log(isCurrentlyClosed(todayOpeningHours));
+	const todayOpeningHours = getOpeningHoursToday(openingHours);
 
 	return (
 		<>
@@ -61,7 +41,8 @@ const LoginForm = () => {
 			/>
 			<h1 className={classes.headline}>Login</h1>
 			<div className="text">
-				<p>{toSentence2(todayOpeningHours ? [openingHourRange(todayOpeningHours)] : [])}</p>
+				<p>{toSentence2(todayOpeningHours ? [getRangeString(todayOpeningHours)] : [])}</p>
+				<small>Uhrzeiten in deiner lokalen Zeitzone</small>
 			</div>
 			<Input
 				type="email"
