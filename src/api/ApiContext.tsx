@@ -254,18 +254,22 @@ class ApiContextComponent extends React.Component<
 
 		socket.on(
 			StudentSocketEvents.LOGIN,
-			(data: { success: boolean; jobInfo: JobInfo; err?: string }) => {
+
+			(data: { success: boolean; jobInfo: JobInfo, err: any }) => {
 				if (!data.success) {
 					const hasEmailInURL = this.props.match.params.email ? true : false;
-
-					let loginError = null
-					if(!hasEmailInURL) {
+          
+          let loginError = null
+          if(data.err.hasOwnProperty("name") && data.err.name === "NotVerified") {
+            loginError = "Bitte bestätige deine E-Mail zunächst."
+          } else if(!hasEmailInURL) {
 						if(data.err != null) {
 							loginError = getFriendlyError(data.err);
 						} else {
 							loginError = "Wir konnten keine Personen mit dieser E-Mail finden."
 						}
 					}
+
 
 					this.setState({
 						isLoggedIn: false,

@@ -36,8 +36,8 @@ export const translation = {
 		de: "Ooops..",
 	},
 	WEBSITE_HEADER_TITLE: {
-		en: "Corona School",
-		de: "Corona School",
+		en: "Lern-Fair",
+		de: "Lern-Fair",
 	},
 	LOGIN_FORM_HEADLINE: {
 		en: "Welcome",
@@ -66,20 +66,20 @@ export const translation = {
 		de: "Link zum Video-Call",
 	},
 	QUEUE_META_HEADER_WAITING: {
-		en: "Corona School | Waiting",
-		de: "Corona School | Warteschlange",
+		en: "Lern-Fair | Waiting",
+		de: "Lern-Fair | Warteschlange",
 	},
 	QUEUE_META_HEADER_ACTIVE: {
-		en: "Corona School | Meeting",
-		de: "Corona School | Kennenlerngespräch",
+		en: "Lern-Fair | Meeting",
+		de: "Lern-Fair | Kennenlerngespräch",
 	},
 	QUEUE_META_HEADER_COMPLETED: {
-		en: "Corona School | Done",
-		de: "Corona School | Fertig",
+		en: "Lern-Fair | Done",
+		de: "Lern-Fair | Fertig",
 	},
 	QUEUE_META_HEADER_REJECTED: {
-		en: "Corona School | Rejected",
-		de: "Corona School | Abgelehnt",
+		en: "Lern-Fair | Rejected",
+		de: "Lern-Fair | Abgelehnt",
 	},
 	QUEUE_ACTIVE_MODAL_HEADLINE: {
 		en: "It's your turn!",

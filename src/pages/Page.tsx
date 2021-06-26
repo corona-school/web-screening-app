@@ -10,10 +10,10 @@ const Page: React.FunctionComponent = (props) => {
 				<div className={classes.formContainer}>{props.children}</div>
 			</div>
 			<div className={classes.legal}>
-				<a href="https://www.corona-school.de/datenschutz-2">
+				<a href="https://www.lern-fair.de/datenschutz">
 					Datenschutzerklärung
 				</a>
-				<a href="https://www.corona-school.de/impressum"> Impressum </a>
+				<a href="https://www.lern-fair.de/impressum"> Impressum </a>
         	</div>
 		</div>
 	);

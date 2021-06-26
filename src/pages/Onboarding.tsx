@@ -42,6 +42,7 @@ const Onboarding = () => {
 				</div>
 				<div className={classes.timeContainer}>
 					{listOpeningHours(openingHours, loading)}
+					<small>Uhrzeiten in deiner lokalen Zeitzone</small>
 				</div>
 			</div>
 		);

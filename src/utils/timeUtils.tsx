@@ -2,6 +2,7 @@ import {ITime} from "../api/useOpeningHours";
 import React from "react";
 import classnames from "classnames";
 import classes from "./timeUtils.module.scss";
+import { DateTime } from "luxon";
 
 const days = [
 	"Montag",
@@ -12,6 +13,49 @@ const days = [
 	"Samstag",
 	"Sonntag",
 ];
+
+export function fromTime(time: ITime) {
+	const [fromHours, fromMinutes] = time.from.split(":").map(Number);
+	const [toHours,   toMinutes] = time.to.split(":").map(Number);
+	
+	const from = DateTime.fromObject({ hour: +fromHours, minute: +fromMinutes, zone: "Europe/Berlin" }).setZone("local");
+	const to =   DateTime.fromObject({ hour: +toHours, minute: +toMinutes, zone: "Europe/Berlin" }).setZone("local");
+	return { from, to };
+}
+
+export function getWeekdayGermany(): number {
+	const nowInGermany = DateTime.now().setZone("Europe/Berlin");
+	const weekDay = nowInGermany.weekday === 0 ? 7 : nowInGermany.weekday;
+	return weekDay;
+}
+
+export function getOpeningHoursToday(openingHours: ITime[]): ITime | undefined {
+	const weekDay = getWeekdayGermany();
+	const todayOpeningHours = openingHours.find((t) => t.week === weekDay);
+
+	console.log("getOpeningHoursToday", "weekDay", weekDay, "todayOpeningHours", todayOpeningHours);
+	return todayOpeningHours;
+}
+
+export function getRangeString(time: ITime) {
+	const { from, to } = fromTime(time);
+	console.log("getRangeString", "from", from, "to", to);
+	return `${from.hour}:${("" + from.minute).padStart(2, "0")} - ${to.hour}:${("" + to.minute).padStart(2, "0")}`;
+}
+
+export function isCurrentlyClosed(todayOpeningHours: ITime | undefined) {
+	if (!todayOpeningHours) return true;
+
+	const { from, to } = fromTime(todayOpeningHours);
+	const nowLocale = DateTime.now().setZone("local");
+
+	
+	const currentlyClosed = from > nowLocale || nowLocale > to;
+
+	console.log("isCurrentlyClosed", "nowLocale", nowLocale, "from", from, "to", to, "currentlyClosed", currentlyClosed);
+
+	return currentlyClosed;
+}
 
 export const toSentence = (arr: string[]) => {
 	if (arr.length === 0) {
@@ -45,16 +89,18 @@ export const toSentence2 = (arr: string[]) => {
 };
 
 export const listOpeningHours = (openingHours: ITime[], loading: boolean) => {
-	const currentDay = new Date().getDay() === 0 ? 7 : new Date().getDay();
-
 	if (loading) return <span>Lädt...</span>;
 
-	return days.map((d, i) => {
-		const day = openingHours.filter(t => t.week === i+1);
-		const timeString = toSentence(day.map(t => `${t.from} - ${t.to}`));
+	const currentWeekDay = getWeekdayGermany();
+
+	return days.map((day, i) => {
+		const weekDay = i + 1;
+
+		const todayOpeningHours = openingHours.filter(t => t.week === weekDay);
+		const timeString = toSentence(todayOpeningHours.map(getRangeString));
 		return (
-			<div className={classnames(classes.openTime, {[classes.today]: currentDay === i+1})}>
-				<div>{d}:</div>
+			<div className={classnames(classes.openTime, {[classes.today]: weekDay === currentWeekDay })}>
+				<div>{day}:</div>
 				<div className={classes.timeString}>{timeString}</div>
 			</div>
 		)
