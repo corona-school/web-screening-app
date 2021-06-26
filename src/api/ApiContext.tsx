@@ -243,18 +243,34 @@ class ApiContextComponent extends React.Component<
 			}
 		});
 
+		function getFriendlyError(err: string) {
+			switch (err) {
+				case "Student is already verified":
+					return "Du bist bereits verifiziert!";
+				default:
+					return err;
+			}
+		}
+
 		socket.on(
 			StudentSocketEvents.LOGIN,
-			(data: { success: boolean; jobInfo: JobInfo }) => {
+			(data: { success: boolean; jobInfo: JobInfo; err?: string }) => {
 				if (!data.success) {
 					const hasEmailInURL = this.props.match.params.email ? true : false;
+
+					let loginError = null
+					if(!hasEmailInURL) {
+						if(data.err != null) {
+							loginError = getFriendlyError(data.err);
+						} else {
+							loginError = "Wir konnten keine Personen mit dieser E-Mail finden."
+						}
+					}
 
 					this.setState({
 						isLoggedIn: false,
 						pendingLogin: false,
-						loginError: hasEmailInURL
-							? null
-							: "Wir konnten keine Personen mit dieser E-Mail finden.",
+						loginError,
 					});
 
 					if (this.props.match.params.email) {
