@@ -1,3 +1,16 @@
+## Environment file
+
+You can add a **.env file** to enable a **development mode** which ignores opening times.
+
+Just add a file called `.env` in the root directory, and add this content:
+
+```dotenv
+REACT_APP_DEV=true
+```
+
+
+## React
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
