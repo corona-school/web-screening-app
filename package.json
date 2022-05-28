@@ -25,7 +25,6 @@
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
     "luxon": "^1.27.0",
-    "node-sass": "^4.14.1",
     "path": "^0.12.7",
     "push.js": "^1.0.12",
     "react": "^16.13.1",
@@ -37,6 +36,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-spinners": "^0.8.1",
+    "sass": "^1.52.1",
     "socket.io-client": "^2.3.0",
     "typescript": "~3.7.2"
   },
