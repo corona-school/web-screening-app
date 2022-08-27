@@ -44,6 +44,7 @@ export function getRangeString(time: ITime) {
 }
 
 export function isCurrentlyClosed(todayOpeningHours: ITime | undefined) {
+	if (process.env.REACT_APP_DEV) return false;
 	if (!todayOpeningHours) return true;
 
 	const { from, to } = fromTime(todayOpeningHours);
