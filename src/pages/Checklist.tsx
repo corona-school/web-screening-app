@@ -32,12 +32,6 @@ const Checklist = () => {
 					itemNumber={
 						<img style={{ width: "30px" }} src={VerifyIcon} alt="Verify Icon" />
 					}>
-					Ich nutze Chrome als Browser.
-				</List.Item>
-				<List.Item
-					itemNumber={
-						<img style={{ width: "30px" }} src={VerifyIcon} alt="Verify Icon" />
-					}>
 					Ich habe eine Webcam und ein Mikrofon.
 				</List.Item>
 				<List.Item
