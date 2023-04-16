@@ -1,3 +1,11 @@
+# Screening App
+
+**This App was deprovisioned on 16.04.2023**
+
+With the Screening Backlog being replaced by appointment booking via Calendly this application was no longer used and was thus shut down. Farewell, web-screening-app!
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
